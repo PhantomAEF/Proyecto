@@ -1,0 +1,71 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.2.8</VERSION>
+ <DEVICE>"ATmega328P"</DEVICE>
+ <WORKING_DIR>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\Debug</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc</DIR>
+  <DIR>C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avrassembler\Include</DIR>
+  <DIR></DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m328Pdef.inc</FILE>
+  <FILE>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\M328PDEF.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\Debug\Proyecto.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>Proyecto.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>Proyecto.map</FILE>
+  <FILE>Proyecto.lss</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <MAIN><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>19</LINE></MAIN>
+  <ISR_PCINT0><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>243</LINE></ISR_PCINT0>
+  <TIM1_OVF><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>281</LINE></TIM1_OVF>
+  <TABLA7SEG><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>30</LINE></TABLA7SEG>
+  <Setup><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>34</LINE></Setup>
+  <IdelayT1><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>227</LINE></IdelayT1>
+  <loop><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>100</LINE></loop>
+  <ESTADOFECHA><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>148</LINE></ESTADOFECHA>
+  <ESTADORELOJ><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>103</LINE></ESTADORELOJ>
+  <delaybounce3><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>216</LINE></delaybounce3>
+  <ESTADOALARMA><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>197</LINE></ESTADOALARMA>
+  <delaybounce2><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>208</LINE></delaybounce2>
+  <delay2><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>211</LINE></delay2>
+  <delay3><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>218</LINE></delay3>
+  <delay4><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>220</LINE></delay4>
+  <FIN><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>272</LINE></FIN>
+  <Verificar><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>251</LINE></Verificar>
+  <INCRE><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>260</LINE></INCRE>
+  <INCRE2><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>263</LINE></INCRE2>
+  <INCRE3><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>266</LINE></INCRE3>
+  <INCRE4><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>269</LINE></INCRE4>
+  <ENP><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>294</LINE></ENP>
+  <APP><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>297</LINE></APP>
+  <SUMA><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>300</LINE></SUMA>
+  <SUM><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>305</LINE></SUM>
+  <OVERFLO><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>315</LINE></OVERFLO>
+  <FIN2><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>468</LINE></FIN2>
+  <FIN3><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>310</LINE></FIN3>
+  <OVERFLO2><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>321</LINE></OVERFLO2>
+  <TOP24><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>333</LINE></TOP24>
+  <OVERFLO3><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>329</LINE></OVERFLO3>
+  <TOP2><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>337</LINE></TOP2>
+  <FEBRERO><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>346</LINE></FEBRERO>
+  <PR3><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>418</LINE></PR3>
+  <SUMANORM><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>355</LINE></SUMANORM>
+  <TOPDIA><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>362</LINE></TOPDIA>
+  <CD><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>424</LINE></CD>
+  <PR1><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>406</LINE></PR1>
+  <PR2><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>412</LINE></PR2>
+  <NM><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>439</LINE></NM>
+  <NM1><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>429</LINE></NM1>
+  <TOPMES><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>455</LINE></TOPMES>
+  <TOPNMES><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>451</LINE></TOPNMES>
+  <CM><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>462</LINE></CM>
+ </LABELS>
+</ASSEMBLER_INFO>
