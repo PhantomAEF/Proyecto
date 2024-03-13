@@ -95,13 +95,24 @@ Setup:
 	INC R1 //Contador de mes
 	INC R3 //MES 0
 	// R4 MES 0
+
+	CLR R5 //OR para configurar distintos modos
+	CLR R6 //Variable de modificacion
+	CLR R7 //Variable de eleccion de display (Unidades, decenas, etc.)
+	CLR R8 // TEMP 
+	INC R19
 //*******************************************************
 // LOOP
 //*******************************************************
 loop:
+	
 	SBRS R19, 0
 	RJMP ESTADOFECHA
 ESTADORELOJ: 
+	SBRC R7, 0
+	MOV R6, R23
+	SBRS R7, 0
+	MOV R6, R22
 	CBI PORTC, PC4
 	CBI PORTC, PC5
 	LDI ZH, HIGH(TABLA7SEG << 1)
@@ -145,6 +156,72 @@ ESTADORELOJ:
 	OUT PORTD, R20
 	CALL delaybounce3
 	CBI PORTC, PC3
+	SBRS R19, 3
+	RJMP ENCENDERMASK
+	RJMP CONFIH
+CONFIH:
+	LDI R16, 0b0000_0000
+	STS TIMSK1, R16
+	SBRC R7, 0
+	SBI PORTC, PC5
+	CBI PORTC, PC5
+	SBRC R7, 0
+	RJMP CONFIVERI2
+CONFIVERI1:
+	MOV R22, R6					
+	CPI R22, 0b000_1010             //Contador de minutos
+	BREQ OVERFLOCONFI
+	CPI R22, 0b1111_1111
+	BREQ UNDERFLOCONFI
+	RJMP loop
+
+UNDERFLOCONFI:
+	DEC R18
+	CPI R18, 0b1111_1111
+	BRNE CONFIA1
+	LDI R22, 9
+	LDI R18, 5
+	RJMP loop
+CONFIA1:
+	RJMP loop
+OVERFLOCONFI:
+	CLR R22
+	INC R18                         //Contador de decenas
+	CPI R18, 0b000_0110
+	BREQ OVERFLOCONFI2
+	RJMP loop
+OVERFLOCONFI2:
+	CLR R18
+	RJMP loop
+
+CONFIVERI2:
+	MOV R23, R6
+	CPI R25, 0b000_0010
+	BREQ CONFITOP24                       //Contador de horas
+	CPI R23, 0b000_1010
+	BREQ OVERFLOCONFI3
+	CPI R23, 0b1111_1111
+	BREQ UNDERFLOCONFI2
+	rjmp loop
+UNDERFLOCONFI2:
+	DEC R25
+	CPI R25, 0b1111_1111
+	BRNE CONFIFIN
+	LDI R25, 2
+	LDI R23, 3
+	RJMP loop
+OVERFLOCONFI3:
+	CLR R23
+	INC R25                         //Contador de decenas de horas
+	rjmp loop
+CONFITOP24:
+	CPI R23, 0b0000_0100
+	BREQ CONFITOP2
+	RJMP loop
+CONFITOP2:
+	CLR R23
+	CLR R25
+CONFIFIN:
 	RJMP loop
 ESTADOFECHA:
 	SBRS R19, 1
@@ -193,14 +270,24 @@ ESTADOFECHA:
 	OUT PORTD, R20
 	CALL delaybounce3
 	CBI PORTC, PC3
-
+	SBRS R19, 3
+	RJMP CONFIF
+	RJMP loop
+CONFIF:
 	RJMP loop
 ESTADOALARMA:
 	SBRS R19, 2
 	RJMP loop
 	CBI PORTC, PC4
 	SBI PORTC, PC5
-
+	SBRS R19, 3
+	RJMP CONFIA
+	RJMP loop
+CONFIA:
+	RJMP loop
+ENCENDERMASK:
+	LDI R16, 0b0000_0001
+	STS TIMSK1, R16
 	RJMP loop
 //*****************************************************************************
 // Sub-rutinas
@@ -249,6 +336,9 @@ ISR_PCINT0:
 	INC R26
 	SBRS R26, 1
 	RJMP FIN
+
+	SBRC R19, 3
+	RJMP CONFIINT
 Verificar:
 	CLR R26
 	SBRS R21, 0
@@ -268,7 +358,50 @@ INCRE3:
 	LDI R19, 0b0100
 	RJMP FIN
 INCRE4: 
+	MOV R5, R19
 	LDI R19, 0b1000
+	OR R19, R5
+	RJMP FIN
+APAGARCONFI:
+	CBR R19, PC3
+	RJMP FIN
+CONFIINT:
+	CLR R26
+	SBRS R21, 0
+	RJMP CONFI1
+	SBRS R21, 1
+	RJMP CONFI2
+	SBRS R21, 2
+	RJMP CONFI3
+	SBRS R21, 3
+	RJMP CONFI4
+	RJMP FIN
+CONFI1:
+	SBRS R7, 0
+	MOV R6, R22
+	SBRC R7, 0
+	MOV R6, R23
+	INC R6
+	RJMP FIN
+CONFI2: 
+	SBRS R7, 0
+	MOV R6, R22
+	SBRC R7, 0
+	MOV R6, R23
+	DEC R6
+	RJMP FIN
+CONFI3: 
+	INC R7
+	LDI R24, 2
+	CP R24, R7
+	BREQ OVERCONFI3
+	RJMP FIN
+CONFI4:
+	LDI R24, 0b0111
+	AND R19, R24
+	RJMP FIN
+OVERCONFI3:
+	CLR R7
 	RJMP FIN
 FIN:
 	IN R21, PINB
