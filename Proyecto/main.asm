@@ -8,7 +8,8 @@
 // Encabezado
 //*****************************************************************************
 .INCLUDE "M328PDEF.inc"
-.equ T1Value = 0x0BDC
+//.equ T1Value = 0x0BDC
+.equ T1Value = 0xFE17
 .CSEG //Inicio del código
 .ORG 0x00 
 	JMP MAIN			//Vector reset
@@ -340,15 +341,19 @@ TOP2:
 	CLR R18
 	CLR R25
 
+//EValua si ya va por dia 3X
 	LDI R24, 2
 	CP R1, R24
-	BREQ FEBRERO
-FEBRERO: 
+	BRNE COMP
 	LDI R24, 2
 	CP R2, R24
-	BREQ PR3
-	RJMP SUMANORM
-//EValua si ya va por dia 3X
+	BRNE COMP
+	LDI R24, 9
+	INC R0 
+	CP R0, R24
+	BREQ NM
+	RJMP FIN2
+COMP:
 	LDI R24, 3
 	CP R2, R24
 	BREQ TOPDIA
@@ -386,56 +391,43 @@ TOPDIA:
 
 	LDI R24, 8
 	CP R1, R24
-	BREQ PR2
+	BREQ PR1
 
 	LDI R24, 9
 	CP R1, R24
-	BREQ PR1
+	BREQ PR2
 
 	LDI R24, 10
 	CP R1, R24
-	BREQ PR2
+	BREQ PR1
 
 	LDI R24, 11
 	CP R1, R24
-	BREQ PR1
+	BREQ PR2
 
 	LDI R24, 12
 	CP R1, R24
-	BREQ PR2
+	BREQ PR1
+
+	rjmp FIN2
 PR1:
-	LDI R24, 1
-	INC R0 
-	CP R0, R24
-	BREQ NM
-	RJMP FIN2
-PR2:
 	LDI R24, 2
 	INC R0 
 	CP R0, R24
 	BREQ NM
 	RJMP FIN2
-PR3:
-	LDI R24, 9
+PR2:
+	LDI R24, 1
 	INC R0 
 	CP R0, R24
 	BREQ NM
 	RJMP FIN2
+
 CD:
 	CLR R0
-	INC R0
 	INC R2
 	RJMP FIN2
-NM1:
-	CLR R0
-	INC R0
-	CLR R2
-	CLR R1
-	INC R1
-	CLR R3
-	INC R3
-	CLR R4
-	RJMP FIN2
+
 NM:
 	CLR R0
 	INC R0
@@ -448,6 +440,7 @@ NM:
 	LDI R24, 10
 	CP R3, R24
 	BREQ TOPNMES
+	RJMP FIN2
 TOPNMES:
 	CLR R3
 	INC R4

@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.8  C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm Tue Mar 12 14:43:49 2024
+AVRASM ver. 2.2.8  C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm Tue Mar 12 21:12:18 2024
 
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m328Pdef.inc'
 C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm(10): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\M328PDEF.inc'
@@ -1039,7 +1039,8 @@ C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm(10): Includ
                                  #endif  /* _M328PDEF_INC_ */
                                  
                                  ; ***** END OF FILE ******************************************************
-                                 .equ T1Value = 0x0BDC
+                                 //.equ T1Value = 0x0BDC
+                                 .equ T1Value = 0xFE17
                                  .CSEG //Inicio del código
                                  .ORG 0x00 
 000000 940c 001c                 	JMP MAIN			//Vector reset
@@ -1263,10 +1264,10 @@ C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm(10): Includ
 0000bc e003                      	LDI R16, 0b0000_0011
 0000bd 9300 0081                 	STS TCCR1B, R16
                                  
-0000bf e00b                      	LDI R16, HIGH(T1Value)
+0000bf ef0e                      	LDI R16, HIGH(T1Value)
 0000c0 9300 0085                 	STS TCNT1H, R16
                                  
-0000c2 ed0c                      	LDI R16, LOW(T1Value)
+0000c2 e107                      	LDI R16, LOW(T1Value)
 0000c3 9300 0084                 	STS TCNT1L, R16
 0000c5 2700                      	clr R16
                                  
@@ -1318,10 +1319,10 @@ C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm(10): Includ
 0000e3 b70f                      	IN R16, SREG
 0000e4 930f                      	PUSH R16
                                  
-0000e5 e00b                      	LDI R16, HIGH(T1Value)
+0000e5 ef0e                      	LDI R16, HIGH(T1Value)
 0000e6 9300 0085                 	STS TCNT1H, R16
                                  
-0000e8 ed0c                      	LDI R16, LOW(T1Value)
+0000e8 e107                      	LDI R16, LOW(T1Value)
 0000e9 9300 0084                 	STS TCNT1L, R16
 0000eb ffb0                      	SBRS R27, 0
 0000ec c001                      	RJMP ENP
@@ -1341,7 +1342,7 @@ C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm(10): Includ
 0000f2 9563                          INC R22						//Contador de minutos
 0000f3 306a                      	CPI R22, 0b000_1010
 0000f4 f029                          BREQ OVERFLO
-0000f5 c07f                      	RJMP FIN2
+0000f5 c076                      	RJMP FIN2
                                  FIN3:
 0000f6 910f                      	POP R16
 0000f7 bf0f                      	OUT SREG, R16
@@ -1352,7 +1353,7 @@ C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm(10): Includ
 0000fb 9523                      	INC R18                         //Contador de decenas
 0000fc 3026                      	CPI R18, 0b000_0110
 0000fd f009                      	BREQ OVERFLO2
-0000fe c076                      	RJMP FIN2
+0000fe c06d                      	RJMP FIN2
                                  OVERFLO2:
 0000ff 2722                      	CLR R18
 000100 9573                      	INC R23  
@@ -1360,150 +1361,156 @@ C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm(10): Includ
 000102 f031                      	BREQ TOP24                       //Contador de horas
 000103 307a                      	CPI R23, 0b000_1010
 000104 f009                      	BREQ OVERFLO3
-000105 c06f                      	rjmp FIN2
+000105 c066                      	rjmp FIN2
                                  OVERFLO3:
 000106 2777                      	CLR R23
 000107 9593                      	INC R25                         //Contador de decenas de horas
-000108 c06c                      	rjmp FIN2
+000108 c063                      	rjmp FIN2
                                  TOP24:
 000109 3074                      	CPI R23, 0b0000_0100
 00010a f009                      	BREQ TOP2
-00010b c069                      	RJMP FIN2
+00010b c060                      	RJMP FIN2
                                  TOP2:
 00010c 2777                      	CLR R23
 00010d 2766                      	CLR R22
 00010e 2722                      	CLR R18
 00010f 2799                      	CLR R25
                                  
+                                 //EValua si ya va por dia 3X
 000110 e082                      	LDI R24, 2
 000111 1618                      	CP R1, R24
-000112 f001                      	BREQ FEBRERO
-                                 FEBRERO: 
+000112 f441                      	BRNE COMP
 000113 e082                      	LDI R24, 2
 000114 1628                      	CP R2, R24
-000115 f1a1                      	BREQ PR3
-000116 c003                      	RJMP SUMANORM
-                                 //EValua si ya va por dia 3X
-000117 e083                      	LDI R24, 3
-000118 1628                      	CP R2, R24
-000119 f029                      	BREQ TOPDIA
+000115 f429                      	BRNE COMP
+000116 e089                      	LDI R24, 9
+000117 9403                      	INC R0 
+000118 1608                      	CP R0, R24
+000119 f1c1                      	BREQ NM
+00011a c051                      	RJMP FIN2
+                                 COMP:
+00011b e083                      	LDI R24, 3
+00011c 1628                      	CP R2, R24
+00011d f029                      	BREQ TOPDIA
                                  SUMANORM:
-00011a e08a                      	LDI R24, 10
-00011b 9403                      	INC R0 
-00011c 1608                      	CP R0, R24
-00011d f189                      	BREQ CD
+00011e e08a                      	LDI R24, 10
+00011f 9403                      	INC R0 
+000120 1608                      	CP R0, R24
+000121 f169                      	BREQ CD
                                  
-00011e c056                      	RJMP FIN2
+000122 c049                      	RJMP FIN2
                                  TOPDIA:
-00011f e081                      	LDI R24, 1
-000120 1618                      	CP R1, R24
-000121 f0f1                      	BREQ PR1
+000123 e081                      	LDI R24, 1
+000124 1618                      	CP R1, R24
+000125 f0f9                      	BREQ PR1
                                  
-000122 e083                      	LDI R24, 3
-000123 1618                      	CP R1, R24
-000124 f0d9                      	BREQ PR1
+000126 e083                      	LDI R24, 3
+000127 1618                      	CP R1, R24
+000128 f0e1                      	BREQ PR1
                                  
-000125 e084                      	LDI R24, 4
-000126 1618                      	CP R1, R24
-000127 f0e9                      	BREQ PR2
+000129 e084                      	LDI R24, 4
+00012a 1618                      	CP R1, R24
+00012b f0f1                      	BREQ PR2
                                  
-000128 e085                      	LDI R24, 5
-000129 1618                      	CP R1, R24
-00012a f0a9                      	BREQ PR1
+00012c e085                      	LDI R24, 5
+00012d 1618                      	CP R1, R24
+00012e f0b1                      	BREQ PR1
                                  
-00012b e086                      	LDI R24, 6
-00012c 1618                      	CP R1, R24
-00012d f0b9                      	BREQ PR2
+00012f e086                      	LDI R24, 6
+000130 1618                      	CP R1, R24
+000131 f0c1                      	BREQ PR2
                                  
-00012e e087                      	LDI R24, 7
-00012f 1618                      	CP R1, R24
-000130 f079                      	BREQ PR1
+000132 e087                      	LDI R24, 7
+000133 1618                      	CP R1, R24
+000134 f081                      	BREQ PR1
                                  
-000131 e088                      	LDI R24, 8
-000132 1618                      	CP R1, R24
-000133 f089                      	BREQ PR2
+000135 e088                      	LDI R24, 8
+000136 1618                      	CP R1, R24
+000137 f069                      	BREQ PR1
                                  
-000134 e089                      	LDI R24, 9
-000135 1618                      	CP R1, R24
-000136 f049                      	BREQ PR1
+000138 e089                      	LDI R24, 9
+000139 1618                      	CP R1, R24
+00013a f079                      	BREQ PR2
                                  
-000137 e08a                      	LDI R24, 10
-000138 1618                      	CP R1, R24
-000139 f059                      	BREQ PR2
+00013b e08a                      	LDI R24, 10
+00013c 1618                      	CP R1, R24
+00013d f039                      	BREQ PR1
                                  
-00013a e08b                      	LDI R24, 11
-00013b 1618                      	CP R1, R24
-00013c f019                      	BREQ PR1
+00013e e08b                      	LDI R24, 11
+00013f 1618                      	CP R1, R24
+000140 f049                      	BREQ PR2
                                  
-00013d e08c                      	LDI R24, 12
-00013e 1618                      	CP R1, R24
-00013f f029                      	BREQ PR2
+000141 e08c                      	LDI R24, 12
+000142 1618                      	CP R1, R24
+000143 f009                      	BREQ PR1
+                                 
+000144 c027                      	rjmp FIN2
                                  PR1:
-000140 e081                      	LDI R24, 1
-000141 9403                      	INC R0 
-000142 1608                      	CP R0, R24
-000143 f0c1                      	BREQ NM
-000144 c030                      	RJMP FIN2
-                                 PR2:
 000145 e082                      	LDI R24, 2
 000146 9403                      	INC R0 
 000147 1608                      	CP R0, R24
-000148 f099                      	BREQ NM
-000149 c02b                      	RJMP FIN2
-                                 PR3:
-00014a e089                      	LDI R24, 9
+000148 f049                      	BREQ NM
+000149 c022                      	RJMP FIN2
+                                 PR2:
+00014a e081                      	LDI R24, 1
 00014b 9403                      	INC R0 
 00014c 1608                      	CP R0, R24
-00014d f071                      	BREQ NM
-00014e c026                      	RJMP FIN2
+00014d f021                      	BREQ NM
+00014e c01d                      	RJMP FIN2
+                                 /*PR3:
+                                 	LDI R24, 9
+                                 	INC R0 
+                                 	CP R0, R24
+                                 	BREQ NM
+                                 	RJMP FIN2*/
                                  CD:
 00014f 2400                      	CLR R0
-000150 9403                      	INC R0
-000151 9423                      	INC R2
-000152 c022                      	RJMP FIN2
-                                 NM1:
-000153 2400                      	CLR R0
-000154 9403                      	INC R0
-000155 2422                      	CLR R2
-000156 2411                      	CLR R1
-000157 9413                      	INC R1
-000158 2433                      	CLR R3
-000159 9433                      	INC R3
-00015a 2444                      	CLR R4
-00015b c019                      	RJMP FIN2
+000150 9423                      	INC R2
+000151 c01a                      	RJMP FIN2
+                                 /*NM1:
+                                 	CLR R0 //dia 0X
+                                 	INC R0
+                                 	CLR R2 //dia X0
+                                 	CLR R1 //mes XX
+                                 	INC R1
+                                 	CLR R3 //mes 0X
+                                 	INC R3
+                                 	CLR R4 //mes X0
+                                 	RJMP FIN2*/
                                  NM:
-00015c 2400                      	CLR R0
-00015d 9403                      	INC R0
-00015e 2422                      	CLR R2
-00015f e081                      	LDI R24, 1
-000160 1648                      	CP R4, R24
-000161 f041                      	BREQ TOPMES
-000162 9413                      	INC R1
-000163 9433                      	INC R3
-000164 e08a                      	LDI R24, 10
-000165 1638                      	CP R3, R24
-000166 f001                      	BREQ TOPNMES
+000152 2400                      	CLR R0
+000153 9403                      	INC R0
+000154 2422                      	CLR R2
+000155 e081                      	LDI R24, 1
+000156 1648                      	CP R4, R24
+000157 f049                      	BREQ TOPMES
+000158 9413                      	INC R1
+000159 9433                      	INC R3
+00015a e08a                      	LDI R24, 10
+00015b 1638                      	CP R3, R24
+00015c f009                      	BREQ TOPNMES
+00015d c00e                      	RJMP FIN2
                                  TOPNMES:
-000167 2433                      	CLR R3
-000168 9443                      	INC R4
-000169 c00b                      	RJMP FIN2
+00015e 2433                      	CLR R3
+00015f 9443                      	INC R4
+000160 c00b                      	RJMP FIN2
                                  TOPMES:
-00016a 9433                      	INC R3
-00016b 9413                      	INC R1
-00016c e082                      	LDI R24, 2
-00016d 1638                      	CP R3, R24
-00016e f009                      	BREQ CM
-00016f c005                      	RJMP FIN2
+000161 9433                      	INC R3
+000162 9413                      	INC R1
+000163 e082                      	LDI R24, 2
+000164 1638                      	CP R3, R24
+000165 f009                      	BREQ CM
+000166 c005                      	RJMP FIN2
                                  CM:
-000170 2411                      	CLR R1
-000171 2433                      	CLR R3
-000172 2444                      	CLR R4
-000173 9413                      	INC R1
-000174 9433                      	INC R3
+000167 2411                      	CLR R1
+000168 2433                      	CLR R3
+000169 2444                      	CLR R4
+00016a 9413                      	INC R1
+00016b 9433                      	INC R3
                                  FIN2:
-000175 910f                      	POP R16
-000176 bf0f                      	OUT SREG, R16
-000177 910f                      	POP R16
+00016c 910f                      	POP R16
+00016d bf0f                      	OUT SREG, R16
+00016e 910f                      	POP R16
 
 
 RESOURCE USE INFORMATION
@@ -1521,7 +1528,7 @@ counted separately from r26..r31 here.
 .dseg memory usage only counts static data declared with .byte
 
 "ATmega328P" register use summary:
-x  :   0 y  :   0 z  :   8 r0 :  17 r1 :  20 r2 :   7 r3 :  12 r4 :   6 
+x  :   0 y  :   0 z  :   8 r0 :  14 r1 :  18 r2 :   6 r3 :  10 r4 :   5 
 r5 :   0 r6 :   0 r7 :   0 r8 :   0 r9 :   0 r10:   0 r11:   0 r12:   0 
 r13:   0 r14:   0 r15:   0 r16:  49 r17:   3 r18:   6 r19:   8 r20:  17 
 r21:   5 r22:   6 r23:   7 r24:  45 r25:   5 r26:   4 r27:   6 r28:   1 
@@ -1531,14 +1538,14 @@ Registers used: 22 out of 35 (62.9%)
 "ATmega328P" instruction use summary:
 .lds  :   0 .sts  :   0 adc   :   0 add   :   8 adiw  :   0 and   :   0 
 andi  :   0 asr   :   0 bclr  :   0 bld   :   0 brbc  :   0 brbs  :   0 
-brcc  :   0 brcs  :   0 break :   0 breq  :  26 brge  :   0 brhc  :   0 
+brcc  :   0 brcs  :   0 break :   0 breq  :  24 brge  :   0 brhc  :   0 
 brhs  :   0 brid  :   0 brie  :   0 brlo  :   0 brlt  :   0 brmi  :   0 
-brne  :   3 brpl  :   0 brsh  :   0 brtc  :   0 brts  :   0 brvc  :   0 
+brne  :   5 brpl  :   0 brsh  :   0 brtc  :   0 brts  :   0 brvc  :   0 
 brvs  :   0 bset  :   0 bst   :   0 call  :   9 cbi   :  14 cbr   :   0 
-clc   :   0 clh   :   0 cli   :   0 cln   :   0 clr   :  26 cls   :   0 
+clc   :   0 clh   :   0 cli   :   0 cln   :   0 clr   :  21 cls   :   0 
 clt   :   0 clv   :   0 clz   :   0 com   :   0 cp    :  21 cpc   :   0 
 cpi   :   5 cpse  :   0 dec   :   3 eor   :   0 fmul  :   0 fmuls :   0 
-fmulsu:   0 icall :   0 ijmp  :   0 in    :   3 inc   :  25 jmp   :   3 
+fmulsu:   0 icall :   0 ijmp  :   0 in    :   3 inc   :  21 jmp   :   3 
 ld    :   0 ldd   :   0 ldi   :  77 lds   :   0 lpm   :  16 lsl   :   0 
 lsr   :   0 mov   :   0 movw  :   0 mul   :   0 muls  :   0 mulsu :   0 
 neg   :   0 nop   :   0 or    :   0 ori   :   0 out   :  17 pop   :   6 
@@ -1553,7 +1560,7 @@ Instructions used: 24 out of 113 (21.2%)
 "ATmega328P" memory use summary [bytes]:
 Segment   Begin    End      Code   Data   Used    Size   Use%
 ---------------------------------------------------------------
-[.cseg] 0x000000 0x0002f2    700     10    710   32768   2.2%
+[.cseg] 0x000000 0x0002e0    682     10    692   32768   2.1%
 [.dseg] 0x000100 0x000100      0      0      0    2048   0.0%
 [.eseg] 0x000000 0x000000      0      0      0    1024   0.0%
 
