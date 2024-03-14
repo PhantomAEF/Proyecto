@@ -8,8 +8,8 @@
 // Encabezado
 //*****************************************************************************
 .INCLUDE "M328PDEF.inc"
-//.equ T1Value = 0x0BDC
-.equ T1Value = 0xFE17
+.equ T1Value = 0x0BDC
+//.equ T1Value = 0xFE17
 .CSEG //Inicio del código
 .ORG 0x00 
 	JMP MAIN			//Vector reset
@@ -17,6 +17,8 @@
 	JMP ISR_PCINT0
 .ORG 0x001A
 	JMP TIM1_OVF
+.org 0x0020
+	JMP TIM0_OVF
 MAIN:
 //*****************************************************************************
 // Stack Pointer
@@ -41,7 +43,7 @@ Setup:
 	LDI R16, 0b1111_1111
 	OUT DDRD, R16
 
-	LDI R16, 0b0001_0000
+	LDI R16, 0b0011_0000
 	OUT DDRB, R16
 
 	LDI R16, 0b0011_1111
@@ -56,9 +58,11 @@ Setup:
 	LDI R16, 0b0000_0001
 	STS TIMSK1, R16
 
+
 	LDI R16, 0b0000_1111 //coloca la máscara a lo pines pertenecientes
 	STS PCMSK0, R16
 	
+	CALL IdelayT0
 	CALL IdelayT1	
 
 	SEI		
@@ -88,7 +92,8 @@ Setup:
 	CLR R2
 	CLR R3
 	CLR R4
-
+	CLR R10
+	CLR R15
 	INC R0 //DIA 0
 	//R2 DIA 1
 	
@@ -100,6 +105,10 @@ Setup:
 	CLR R6 //Variable de modificacion
 	CLR R7 //Variable de eleccion de display (Unidades, decenas, etc.)
 	CLR R8 // TEMP 
+	CLR R11
+	CLR R12
+	CLR R13
+	CLR R14
 	INC R19
 //*******************************************************
 // LOOP
@@ -108,6 +117,9 @@ loop:
 	
 	SBRS R19, 0
 	RJMP ESTADOFECHA
+//*****************************************************************
+//                            HORA
+//*****************************************************************
 ESTADORELOJ: 
 	SBRC R7, 0
 	MOV R6, R23
@@ -140,11 +152,18 @@ ESTADORELOJ:
 	LDI ZL, LOW(TABLA7SEG << 1)
 	ADD ZL, R23
 	SBI PORTC, PC2
-	SBRS r27, 0
-	SBI PORTD, PD7
-	CBI PORTD, PD7
 	LPM R20, Z
 	OUT PORTD, R20
+	SBRS r27, 0
+	RJMP PP1
+	RJMP PP2
+PP1:
+	SBI PORTD, PD7
+	RJMP Seguir
+PP2:
+	CBI PORTD, PD7
+	RJMP Seguir
+Seguir:
 	CALL delaybounce3
 	CBI PORTC, PC2
 
@@ -159,12 +178,14 @@ ESTADORELOJ:
 	SBRS R19, 3
 	RJMP ENCENDERMASK
 	RJMP CONFIH
+//*****************************************************************
+//CONFIGURACION DE HORA
+//*****************************************************************
 CONFIH:
+	SBI PORTB, PB5
 	LDI R16, 0b0000_0000
 	STS TIMSK1, R16
-	SBRC R7, 0
-	SBI PORTC, PC5
-	CBI PORTC, PC5
+	
 	SBRC R7, 0
 	RJMP CONFIVERI2
 CONFIVERI1:
@@ -176,8 +197,9 @@ CONFIVERI1:
 	RJMP loop
 
 UNDERFLOCONFI:
+	LDI R22, 9
 	DEC R18
-	CPI R18, 0b1111_1111
+	CPI R18, 0xFF
 	BRNE CONFIA1
 	LDI R22, 9
 	LDI R18, 5
@@ -196,6 +218,8 @@ OVERFLOCONFI2:
 
 CONFIVERI2:
 	MOV R23, R6
+	CPI R23, 0b1111_1111
+	BREQ UNDERFLOCONFI2
 	CPI R25, 0b000_0010
 	BREQ CONFITOP24                       //Contador de horas
 	CPI R23, 0b000_1010
@@ -204,6 +228,7 @@ CONFIVERI2:
 	BREQ UNDERFLOCONFI2
 	rjmp loop
 UNDERFLOCONFI2:
+	LDI R23, 9
 	DEC R25
 	CPI R25, 0b1111_1111
 	BRNE CONFIFIN
@@ -223,6 +248,9 @@ CONFITOP2:
 	CLR R25
 CONFIFIN:
 	RJMP loop
+//*****************************************************************
+//                            FECHA
+//*****************************************************************
 ESTADOFECHA:
 	SBRS R19, 1
 	RJMP ESTADOALARMA
@@ -254,9 +282,6 @@ ESTADOFECHA:
 	LDI ZL, LOW(TABLA7SEG << 1)
 	ADD ZL, R3
 	SBI PORTC, PC2
-	SBRS r27, 0
-	SBI PORTD, PD7
-	CBI PORTD, PD7
 	LPM R20, Z
 	OUT PORTD, R20
 	CALL delaybounce3
@@ -271,20 +296,287 @@ ESTADOFECHA:
 	CALL delaybounce3
 	CBI PORTC, PC3
 	SBRS R19, 3
+	RJMP ENCENDERMASK
 	RJMP CONFIF
-	RJMP loop
+//*****************************************************************
+//CONFIGURACION DE FECHA
+//*****************************************************************
 CONFIF:
+	LDI R16, 0b0000_0000
+	STS TIMSK1, R16
+	
+	SBRC R7, 0
+	RJMP CONFINM
+//********************************************************************************************************************************************
+//------------------------------------------------------------DIA-----------------------------------------------------------------------------
+//********************************************************************************************************************************************
+CONFIFECHA1:
+	SBI PORTB, PB5
+	MOV R0, R6
+	CP R0, R9
+	BREQ CONFINICRE7
+	LDI R24, 2
+	CP R1, R24
+	BRNE CONFICOMP
+	LDI R24, 2
+	CP R2, R24
+	BRNE CONFICOMP
+	LDI R24, 9
+	CP R0, R24
+	BREQ CONFINM
 	RJMP loop
+CONFINICRE7:
+	RJMP loop
+CONFICOMP:
+	LDI R24, 3
+	CP R2, R24
+	BREQ CONFITOPDIA
+CONFISUMANORM:
+	LDI R24, 10
+	CP R0, R24
+	BREQ CONFICD
+
+	RJMP loop
+CONFITOPDIA:
+	LDI R24, 1
+	CP R1, R24
+	BREQ CONFIPR1
+
+	LDI R24, 3
+	CP R1, R24
+	BREQ CONFIPR1
+
+	LDI R24, 4
+	CP R1, R24
+	BREQ CONFIPR2
+
+	LDI R24, 5
+	CP R1, R24
+	BREQ CONFIPR1
+
+	LDI R24, 6
+	CP R1, R24
+	BREQ CONFIPR2
+
+	LDI R24, 7
+	CP R1, R24
+	BREQ CONFIPR1
+
+	LDI R24, 8
+	CP R1, R24
+	BREQ CONFIPR1
+
+	LDI R24, 9
+	CP R1, R24
+	BREQ CONFIPR2
+
+	LDI R24, 10
+	CP R1, R24
+	BREQ CONFIPR1
+
+	LDI R24, 11
+	CP R1, R24
+	BREQ CONFIPR2
+
+	LDI R24, 12
+	CP R1, R24
+	BREQ CONFIPR1
+
+	rjmp loop
+CONFIPR1:
+	LDI R24, 2
+	CP R0, R24
+	BREQ CONFICD
+	RJMP loop
+CONFIPR2:
+	LDI R24, 1
+	CP R0, R24
+	BREQ CONFICD
+	RJMP loop
+
+CONFICD:
+	CLR R0
+	INC R2
+	RJMP loop
+SALTO: 
+	MOV R9, R0
+	RJMP loop
+
+//********************************************************************************************************************************************
+//------------------------------------------------------------MES-----------------------------------------------------------------------------
+//********************************************************************************************************************************************
+CONFINM:
+	MOV R3, R6
+	LDI R24, 1
+	CP R4, R24
+	BREQ CONFITOPMES
+	CP R3, R9
+	BRNE CONFINICRE5
+	INC R1
+CONFINICRE5:
+	LDI R24, 10
+	CP R3, R24
+	BREQ CONFITOPNMES
+	RJMP SALTO2
+CONFITOPNMES:
+	CLR R3
+	INC R4
+	RJMP SALTO2
+CONFITOPMES:
+	CP R3, R9
+	BRNE CONFINICRE6
+	INC R1
+CONFINICRE6:
+	LDI R24, 3
+	CP R3, R24
+	BREQ CONFICM
+	RJMP SALTO2
+CONFICM:
+	CLR R1
+	CLR R3
+	CLR R4
+	INC R3
+	MOV R9, R3
+	RJMP SALTO2
+SALTO2:
+	MOV R9, R3
+	RJMP loop
+	RJMP loop
+//*****************************************************************
+//                          ALARMA
+//*****************************************************************
 ESTADOALARMA:
 	SBRS R19, 2
 	RJMP loop
 	CBI PORTC, PC4
 	SBI PORTC, PC5
+	// DIPLAY 1
+	LDI ZH, HIGH(TABLA7SEG << 1)
+	LDI ZL, LOW(TABLA7SEG << 1)
+	ADD ZL, R11
+	SBI PORTC, PC1
+	LPM R20, Z
+	OUT PORTD, R20
+	CALL delaybounce3
+	CBI PORTC, PC1
+
+	// DIPLAY 2
+	LDI ZH, HIGH(TABLA7SEG << 1)
+	LDI ZL, LOW(TABLA7SEG << 1)
+	ADD ZL, R12
+	SBI PORTC, PC0
+	LPM R20, Z
+	OUT PORTD, R20
+	CALL delaybounce3
+	CBI PORTC, PC0
+
+	// DIPLAY 3
+	LDI ZH, HIGH(TABLA7SEG << 1)
+	LDI ZL, LOW(TABLA7SEG << 1)
+	ADD ZL, R13
+	SBI PORTC, PC2
+	LPM R20, Z
+	OUT PORTD, R20
+	CALL delaybounce3
+	CBI PORTC, PC2
+
+	// DIPLAY 4
+	LDI ZH, HIGH(TABLA7SEG << 1)
+	LDI ZL, LOW(TABLA7SEG << 1)
+	ADD ZL, R14
+	SBI PORTC, PC3
+	LPM R20, Z
+	OUT PORTD, R20
+	CALL delaybounce3
+	CBI PORTC, PC3
+
 	SBRS R19, 3
+	RJMP loop
 	RJMP CONFIA
-	RJMP loop
+//*****************************************************************
+//                          CONFIGURACION DE ALARMA
+//*****************************************************************
 CONFIA:
+	SBI PORTB, PB5
+	SBRC R7, 0
+	RJMP CONFIVERI6
+CONFIVERI5:
+	LDI R24, 0b000_1010	
+	CP R11, R24             //Contador de minutos
+	BREQ OVERFLOCONFI5
+	LDI R24, 0b1111_1111	
+	CP R11, R24   
+	BREQ UNDERFLOCONFI5
 	RJMP loop
+
+UNDERFLOCONFI5:
+	LDI R24, 9
+	MOV R11, R24
+	DEC R12
+	LDI R24, 0xFF
+	CP R12, R24
+	BRNE CONFIA5
+	LDI R24, 9
+	MOV R11, R24
+	LDI R24, 5
+	MOV R12, R24
+	RJMP loop
+CONFIA5:
+	RJMP loop
+OVERFLOCONFI5:
+	CLR R11
+	INC R12
+	LDI R24, 0b000_0110                         //Contador de decenas
+	CP R24, R12
+	BREQ OVERFLOCONFI6
+	RJMP loop
+OVERFLOCONFI6:
+	CLR R12
+	RJMP loop
+
+CONFIVERI6:
+	LDI R24, 0b1111_1111
+	CP R24, R13
+	BREQ UNDERFLOCONFI6
+	LDI R24, 0b000_0010
+	CP R24, R14
+	BREQ CONFITOP245                       //Contador de horas
+	LDI R24, 0b000_1010
+	CP R24, R13
+	BREQ OVERFLOCONFI7
+	LDI R24, 0b1111_1111
+	CP R24, R13
+	BREQ UNDERFLOCONFI6
+	rjmp loop
+UNDERFLOCONFI6:
+	LDI R24, 9
+	MOV R13, R24
+	DEC R14
+	LDI R24, 0b1111_1111
+	CP R24, R14
+	BRNE CONFIFIN5
+	LDI R24, 2
+	MOV R14, R24
+	LDI R24, 3
+	MOV R13, R24
+	RJMP loop
+OVERFLOCONFI7:
+	CLR R13
+	INC R14                         //Contador de decenas de horas
+	rjmp loop
+CONFITOP245:
+	LDI R24, 0b0000_0100
+	CP R13, R24
+	BREQ CONFITOP25
+	RJMP loop
+CONFITOP25:
+	CLR R13
+	CLR R14
+CONFIFIN5:
+	RJMP loop
+//*****************************************************************
+//                      ENCENDER MASCARAS
+//*****************************************************************
 ENCENDERMASK:
 	LDI R16, 0b0000_0001
 	STS TIMSK1, R16
@@ -311,7 +603,14 @@ delaybounce3:
 		DEC r24
 		BRNE delay3
 	ret
+IdelayT0:
+	LDI R16, (1 << CS02) | (1 << CS00)
+	OUT TCCR0B, R16
 
+	LDI R16, 100
+	OUT TCNT0, R16
+
+	RET
 IdelayT1:
 	LDI R16, 0b0000_0011
 	STS TCCR1B, R16
@@ -336,7 +635,6 @@ ISR_PCINT0:
 	INC R26
 	SBRS R26, 1
 	RJMP FIN
-
 	SBRC R19, 3
 	RJMP CONFIINT
 Verificar:
@@ -358,6 +656,7 @@ INCRE3:
 	LDI R19, 0b0100
 	RJMP FIN
 INCRE4: 
+	SBI PORTB, PB5
 	MOV R5, R19
 	LDI R19, 0b1000
 	OR R19, R5
@@ -376,27 +675,94 @@ CONFIINT:
 	SBRS R21, 3
 	RJMP CONFI4
 	RJMP FIN
+//*****************************************************************************************************************************//
 CONFI1:
+//*************************
+//CONFI HORA
+//*************************
+	SBRS R19, 0
+	RJMP CONFIGURARFECHA1
 	SBRS R7, 0
 	MOV R6, R22
 	SBRC R7, 0
 	MOV R6, R23
+	RJMP CONFI11
+//*************************
+//CONFI FECHA
+//*************************
+CONFIGURARFECHA1:
+	SBRS R19, 1
+	RJMP CONFIGURARALARMA1
+	SBRS R7, 0
+	MOV R6, R0
+	SBRC R7, 0
+	MOV R6, R3
+	RJMP CONFI11
+//*************************
+//CONFI ALARMA
+//*************************
+CONFIGURARALARMA1:
+	SBRS R19, 2
+	RJMP FIN
+	SBRS R7, 0
+	INC R11
+	SBRC R7, 0
+	INC R13
+	RJMP CONFI12
+CONFI12:
+	RJMP FIN
+CONFI11:
 	INC R6
 	RJMP FIN
+//*****************************************************************************************************************************//
 CONFI2: 
+//*************************
+//CONFI HORA
+//*************************
+	SBRS R19, 0
+	RJMP CONFIGURARFECHA2
 	SBRS R7, 0
 	MOV R6, R22
 	SBRC R7, 0
 	MOV R6, R23
+	RJMP CONFI21
+//*************************
+//CONFI FECHA
+//*************************
+CONFIGURARFECHA2:
+	SBRS R19, 1
+	RJMP CONFIGURARALARMA2
+	SBRS R7, 0
+	MOV R6, R0
+	SBRC R7, 0
+	MOV R6, R3
+	RJMP CONFI21
+//*************************
+//CONFI ALARMA
+//*************************
+CONFIGURARALARMA2:
+	SBRS R19, 2
+	RJMP FIN
+	SBRS R7, 0
+	DEC R11
+	SBRC R7, 0
+	DEC R13
+	RJMP CONFI22
+CONFI22:
+	RJMP FIN
+CONFI21:
 	DEC R6
 	RJMP FIN
+//*****************************************************************************************************************************//
 CONFI3: 
 	INC R7
 	LDI R24, 2
 	CP R24, R7
 	BREQ OVERCONFI3
 	RJMP FIN
+//*****************************************************************************************************************************//
 CONFI4:
+	CBI PORTB, PB5
 	LDI R24, 0b0111
 	AND R19, R24
 	RJMP FIN
@@ -410,7 +776,7 @@ FIN:
 	POP R16
 	RETI
 //***********************************************************************************
-//TIMER0
+//TIMER1
 //***********************************************************************************
 TIM1_OVF:
 	PUSH R16
@@ -422,20 +788,39 @@ TIM1_OVF:
 
 	LDI R16, LOW(T1Value)
 	STS TCNT1L, R16
+
+	CP R14, R25
+	BRNE NADA
+	CP R13, R23
+	BRNE NADA
+	CP R12, R18
+	BRNE NADA
+	CP R11, R22
+	BRNE NADA
+	LDI R16, 0b0000_0001
+	STS TIMSK0, R16
+NADA:
+	LDI R24, 1
+	INC R10
+	CP R10, R24
+	BRNE SUMA
+
 	SBRS R27, 0
 	RJMP ENP
 	RJMP APP
 ENP:
+	CLR r10
 	LDI R27, 0b1
 	RJMP SUMA
 APP:
+	CLR r10
 	LDI R27, 0b0
 	RJMP SUMA
 SUMA:
-	/*INC R17 
+	INC R17 
 	CPI R17, 240
 	BRNE FIN3
-	CLR r17*/
+	CLR r17
 SUM:
     INC R22						//Contador de minutos
 	CPI R22, 0b000_1010
@@ -581,7 +966,7 @@ TOPNMES:
 TOPMES:
 	INC R3
 	INC R1
-	LDI R24, 2
+	LDI R24, 3
 	CP R3, R24
 	BREQ CM
 	RJMP FIN2
@@ -592,6 +977,55 @@ CM:
 	INC R1
 	INC R3
 FIN2:
+	POP R16
+	OUT SREG, R16
+	POP R16
+	RETI
+
+//***********************************************************************************
+//TIMER0
+//***********************************************************************************
+TIM0_OVF:
+	PUSH R16
+	IN R16, SREG
+	PUSH R16
+
+	LDI R16, 100
+	OUT TCNT0, R16
+
+	
+	INC R15
+	LDI R24, 100
+	CP R15, R24
+	BRNE FIN0
+	CLR R15
+
+	SBIS PORTB, PB4
+	RJMP ENCENDERBUZZ
+
+	SBIC PORTB, PB4
+	RJMP APAGARBUZZ
+
+	ENCENDERBUZZ:
+		SBI PORTB, PB4
+		INC R8
+		LDI R24, 60
+		CP R8, R24
+		BRNE FIN0
+		LDI R16, 0b0000_0000
+		STS TIMSK0, R16
+		RJMP FIN0
+	APAGARBUZZ:
+		CBI PORTB, PB4
+		INC R8
+		LDI R24, 60
+		CP R8, R24
+		BRNE FIN0
+		CLR R8
+		LDI R16, 0b0000_0000
+		STS TIMSK0, R16
+		RJMP FIN0
+	FIN0:
 	POP R16
 	OUT SREG, R16
 	POP R16

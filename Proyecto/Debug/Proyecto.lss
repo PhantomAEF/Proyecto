@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.8  C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm Wed Mar 13 15:09:11 2024
+AVRASM ver. 2.2.8  C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm Thu Mar 14 03:17:06 2024
 
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m328Pdef.inc'
 C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm(10): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\M328PDEF.inc'
@@ -1039,597 +1039,1031 @@ C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm(10): Includ
                                  #endif  /* _M328PDEF_INC_ */
                                  
                                  ; ***** END OF FILE ******************************************************
-                                 //.equ T1Value = 0x0BDC
-                                 .equ T1Value = 0xFE17
+                                 .equ T1Value = 0x0BDC
+                                 //.equ T1Value = 0xFE17
                                  .CSEG //Inicio del código
                                  .ORG 0x00 
-000000 940c 001c                 	JMP MAIN			//Vector reset
+000000 940c 0022                 	JMP MAIN			//Vector reset
                                  .org 0x08				//Vector interrupçion puerto b
-000008 940c 010f                 	JMP ISR_PCINT0
+000008 940c 01ef                 	JMP ISR_PCINT0
                                  .ORG 0x001A
-00001a 940c 0150                 	JMP TIM1_OVF
+00001a 940c 0256                 	JMP TIM1_OVF
+                                 .org 0x0020
+000020 940c 02f9                 	JMP TIM0_OVF
                                  MAIN:
                                  //*****************************************************************************
                                  // Stack Pointer
                                  //*****************************************************************************
-00001c ef0f                      	LDI R16, LOW(RAMEND)
-00001d bf0d                      	OUT SPL, R16
-00001e e018                      	LDI R17, HIGH(RAMEND)
-00001f bf1e                      	OUT SPH, R17
+000022 ef0f                      	LDI R16, LOW(RAMEND)
+000023 bf0d                      	OUT SPL, R16
+000024 e018                      	LDI R17, HIGH(RAMEND)
+000025 bf1e                      	OUT SPH, R17
                                  //*****************************************************************************
                                  // Tabla de Valores
                                  //*****************************************************************************
-000020 7940
-000021 3024
-000022 1219
-000023 7802
-000024 1000                      	TABLA7SEG: .DB 0b100_0000, 0b111_1001, 0b010_0100, 0b011_0000, 0b001_1001, 0b001_0010, 0b000_0010, 0b111_1000, 0b000_0000, 0b001_0000
+000026 7940
+000027 3024
+000028 1219
+000029 7802
+00002a 1000                      	TABLA7SEG: .DB 0b100_0000, 0b111_1001, 0b010_0100, 0b011_0000, 0b001_1001, 0b001_0010, 0b000_0010, 0b111_1000, 0b000_0000, 0b001_0000
                                  //*****************************************************************************
                                  // Configuracion
                                  //*****************************************************************************
                                  Setup:
                                  //7 SEGMENTOS
-000025 e0f0                      	LDI ZH, HIGH(TABLA7SEG << 1)
-000026 e4e0                      	LDI ZL, LOW(TABLA7SEG << 1)
+00002b e0f0                      	LDI ZH, HIGH(TABLA7SEG << 1)
+00002c e4ec                      	LDI ZL, LOW(TABLA7SEG << 1)
                                  
                                  
-000027 ef0f                      	LDI R16, 0b1111_1111
-000028 b90a                      	OUT DDRD, R16
+00002d ef0f                      	LDI R16, 0b1111_1111
+00002e b90a                      	OUT DDRD, R16
                                  
-000029 e100                      	LDI R16, 0b0001_0000
-00002a b904                      	OUT DDRB, R16
+00002f e300                      	LDI R16, 0b0011_0000
+000030 b904                      	OUT DDRB, R16
                                  
-00002b e30f                      	LDI R16, 0b0011_1111
-00002c b907                      	OUT DDRC, R16
+000031 e30f                      	LDI R16, 0b0011_1111
+000032 b907                      	OUT DDRC, R16
                                  
-00002d e00f                      	LDI R16, 0b0000_1111
-00002e b905                      	OUT PORTB, R16
+000033 e00f                      	LDI R16, 0b0000_1111
+000034 b905                      	OUT PORTB, R16
                                  
-00002f e001                      	LDI R16,0b0001//pines de control
-000030 9300 0068                 	STS PCICR,R16
+000035 e001                      	LDI R16,0b0001//pines de control
+000036 9300 0068                 	STS PCICR,R16
                                  
-000032 e001                      	LDI R16, 0b0000_0001
-000033 9300 006f                 	STS TIMSK1, R16
+000038 e001                      	LDI R16, 0b0000_0001
+000039 9300 006f                 	STS TIMSK1, R16
                                  
-000035 e00f                      	LDI R16, 0b0000_1111 //coloca la máscara a lo pines pertenecientes
-000036 9300 006b                 	STS PCMSK0, R16
+                                 
+00003b e00f                      	LDI R16, 0b0000_1111 //coloca la máscara a lo pines pertenecientes
+00003c 9300 006b                 	STS PCMSK0, R16
                                  	
-000038 940e 0104                 	CALL IdelayT1	
+00003e 940e 01df                 	CALL IdelayT0
+000040 940e 01e4                 	CALL IdelayT1	
                                  
-00003a 9478                      	SEI		
+000042 9478                      	SEI		
                                  
                                  //*******************************************************
                                  // Apagar tx y rx
                                  //*******************************************************
-00003b e000                      	LDI R16, 0x00
-00003c 9300 00c1                 	STS UCSR0B, R16
+000043 e000                      	LDI R16, 0x00
+000044 9300 00c1                 	STS UCSR0B, R16
                                  
-00003e e000                      	LDI R16, 0
-00003f e010                      	LDI R17, 0
-000040 e020                      	LDI R18, 0
-000041 e030                      	LDI R19, 0 
-000042 e040                      	LDI R20, 0
-000043 e050                      	LDI R21, 0 
-000044 e060                      	LDI R22, 0
-000045 e070                      	LDI R23, 0
-000046 e080                      	LDI R24, 0 //libre
-000047 e090                      	LDI R25, 0
-000048 e0a0                      	LDI R26, 0
-000049 e0b0                      	LDI R27, 0
-00004a e0c0                      	LDI R28, 0
-00004b e0d0                      	LDI R29, 0
-00004c 2400                      	CLR R0
-00004d 2411                      	CLR R1
-00004e 2422                      	CLR R2
-00004f 2433                      	CLR R3
-000050 2444                      	CLR R4
-                                 
-000051 9403                      	INC R0 //DIA 0
+000046 e000                      	LDI R16, 0
+000047 e010                      	LDI R17, 0
+000048 e020                      	LDI R18, 0
+000049 e030                      	LDI R19, 0 
+00004a e040                      	LDI R20, 0
+00004b e050                      	LDI R21, 0 
+00004c e060                      	LDI R22, 0
+00004d e070                      	LDI R23, 0
+00004e e080                      	LDI R24, 0 //libre
+00004f e090                      	LDI R25, 0
+000050 e0a0                      	LDI R26, 0
+000051 e0b0                      	LDI R27, 0
+000052 e0c0                      	LDI R28, 0
+000053 e0d0                      	LDI R29, 0
+000054 2400                      	CLR R0
+000055 2411                      	CLR R1
+000056 2422                      	CLR R2
+000057 2433                      	CLR R3
+000058 2444                      	CLR R4
+000059 24aa                      	CLR R10
+00005a 24ff                      	CLR R15
+00005b 9403                      	INC R0 //DIA 0
                                  	//R2 DIA 1
                                  	
-000052 9413                      	INC R1 //Contador de mes
-000053 9433                      	INC R3 //MES 0
+00005c 9413                      	INC R1 //Contador de mes
+00005d 9433                      	INC R3 //MES 0
                                  	// R4 MES 0
                                  
-000054 2455                      	CLR R5 //OR para configurar distintos modos
-000055 2466                      	CLR R6 //Variable de modificacion
-000056 2477                      	CLR R7 //Variable de eleccion de display (Unidades, decenas, etc.)
-000057 2488                      	CLR R8 // TEMP 
-000058 9533                      	INC R19
+00005e 2455                      	CLR R5 //OR para configurar distintos modos
+00005f 2466                      	CLR R6 //Variable de modificacion
+000060 2477                      	CLR R7 //Variable de eleccion de display (Unidades, decenas, etc.)
+000061 2488                      	CLR R8 // TEMP 
+000062 24bb                      	CLR R11
+000063 24cc                      	CLR R12
+000064 24dd                      	CLR R13
+000065 24ee                      	CLR R14
+000066 9533                      	INC R19
                                  //*******************************************************
                                  // LOOP
                                  //*******************************************************
                                  loop:
                                  	
-000059 ff30                      	SBRS R19, 0
-00005a c063                      	RJMP ESTADOFECHA
+000067 ff30                      	SBRS R19, 0
+000068 c069                      	RJMP ESTADOFECHA
+                                 //*****************************************************************
+                                 //                            HORA
+                                 //*****************************************************************
                                  ESTADORELOJ: 
-00005b fc70                      	SBRC R7, 0
-00005c 2e67                      	MOV R6, R23
-00005d fe70                      	SBRS R7, 0
-00005e 2e66                      	MOV R6, R22
-00005f 9844                      	CBI PORTC, PC4
-000060 9845                      	CBI PORTC, PC5
-000061 e0f0                      	LDI ZH, HIGH(TABLA7SEG << 1)
-000062 e4e0                      	LDI ZL, LOW(TABLA7SEG << 1)
-000063 0fe6                      	ADD ZL, R22
-000064 9a41                      	SBI PORTC, PC1
-000065 9144                      	LPM R20, Z
-000066 b94b                      	OUT PORTD, R20
-000067 940e 00fd                 	CALL delaybounce3
-000069 9841                      	CBI PORTC, PC1
+000069 fc70                      	SBRC R7, 0
+00006a 2e67                      	MOV R6, R23
+00006b fe70                      	SBRS R7, 0
+00006c 2e66                      	MOV R6, R22
+00006d 9844                      	CBI PORTC, PC4
+00006e 9845                      	CBI PORTC, PC5
+00006f e0f0                      	LDI ZH, HIGH(TABLA7SEG << 1)
+000070 e4ec                      	LDI ZL, LOW(TABLA7SEG << 1)
+000071 0fe6                      	ADD ZL, R22
+000072 9a41                      	SBI PORTC, PC1
+000073 9144                      	LPM R20, Z
+000074 b94b                      	OUT PORTD, R20
+000075 940e 01d8                 	CALL delaybounce3
+000077 9841                      	CBI PORTC, PC1
                                  
                                  
-00006a e0f0                      	LDI ZH, HIGH(TABLA7SEG << 1)
-00006b e4e0                      	LDI ZL, LOW(TABLA7SEG << 1)
-00006c 0fe2                      	ADD ZL, R18
-00006d 9a40                      	SBI PORTC, PC0
-00006e 9144                      	LPM R20, Z
-00006f b94b                      	OUT PORTD, R20
+000078 e0f0                      	LDI ZH, HIGH(TABLA7SEG << 1)
+000079 e4ec                      	LDI ZL, LOW(TABLA7SEG << 1)
+00007a 0fe2                      	ADD ZL, R18
+00007b 9a40                      	SBI PORTC, PC0
+00007c 9144                      	LPM R20, Z
+00007d b94b                      	OUT PORTD, R20
                                  
-000070 940e 00fd                 	CALL delaybounce3
+00007e 940e 01d8                 	CALL delaybounce3
                                  
-000072 9840                      	CBI PORTC, PC0
+000080 9840                      	CBI PORTC, PC0
                                  
-000073 e0f0                      	LDI ZH, HIGH(TABLA7SEG << 1)
-000074 e4e0                      	LDI ZL, LOW(TABLA7SEG << 1)
-000075 0fe7                      	ADD ZL, R23
-000076 9a42                      	SBI PORTC, PC2
-000077 ffb0                      	SBRS r27, 0
-000078 9a5f                      	SBI PORTD, PD7
-000079 985f                      	CBI PORTD, PD7
-00007a 9144                      	LPM R20, Z
-00007b b94b                      	OUT PORTD, R20
-00007c 940e 00fd                 	CALL delaybounce3
-00007e 9842                      	CBI PORTC, PC2
+000081 e0f0                      	LDI ZH, HIGH(TABLA7SEG << 1)
+000082 e4ec                      	LDI ZL, LOW(TABLA7SEG << 1)
+000083 0fe7                      	ADD ZL, R23
+000084 9a42                      	SBI PORTC, PC2
+000085 9144                      	LPM R20, Z
+000086 b94b                      	OUT PORTD, R20
+000087 ffb0                      	SBRS r27, 0
+000088 c001                      	RJMP PP1
+000089 c002                      	RJMP PP2
+                                 PP1:
+00008a 9a5f                      	SBI PORTD, PD7
+00008b c002                      	RJMP Seguir
+                                 PP2:
+00008c 985f                      	CBI PORTD, PD7
+00008d c000                      	RJMP Seguir
+                                 Seguir:
+00008e 940e 01d8                 	CALL delaybounce3
+000090 9842                      	CBI PORTC, PC2
                                  
-00007f e0f0                      	LDI ZH, HIGH(TABLA7SEG << 1)
-000080 e4e0                      	LDI ZL, LOW(TABLA7SEG << 1)
-000081 0fe9                      	ADD ZL, R25
-000082 9a43                      	SBI PORTC, PC3
-000083 9144                      	LPM R20, Z
-000084 b94b                      	OUT PORTD, R20
-000085 940e 00fd                 	CALL delaybounce3
-000087 9843                      	CBI PORTC, PC3
-000088 ff33                      	SBRS R19, 3
-000089 c06b                      	RJMP ENCENDERMASK
-00008a c000                      	RJMP CONFIH
+000091 e0f0                      	LDI ZH, HIGH(TABLA7SEG << 1)
+000092 e4ec                      	LDI ZL, LOW(TABLA7SEG << 1)
+000093 0fe9                      	ADD ZL, R25
+000094 9a43                      	SBI PORTC, PC3
+000095 9144                      	LPM R20, Z
+000096 b94b                      	OUT PORTD, R20
+000097 940e 01d8                 	CALL delaybounce3
+000099 9843                      	CBI PORTC, PC3
+00009a ff33                      	SBRS R19, 3
+00009b c134                      	RJMP ENCENDERMASK
+00009c c000                      	RJMP CONFIH
+                                 //*****************************************************************
+                                 //CONFIGURACION DE HORA
+                                 //*****************************************************************
                                  CONFIH:
-00008b e000                      	LDI R16, 0b0000_0000
-00008c 9300 006f                 	STS TIMSK1, R16
-00008e fc70                      	SBRC R7, 0
-00008f 9a45                      	SBI PORTC, PC5
-000090 9845                      	CBI PORTC, PC5
-000091 fc70                      	SBRC R7, 0
-000092 c014                      	RJMP CONFIVERI2
+00009d 9a2d                      	SBI PORTB, PB5
+00009e e000                      	LDI R16, 0b0000_0000
+00009f 9300 006f                 	STS TIMSK1, R16
+                                 	
+0000a1 fc70                      	SBRC R7, 0
+0000a2 c015                      	RJMP CONFIVERI2
                                  CONFIVERI1:
-000093 2d66                      	MOV R22, R6					
-000094 306a                      	CPI R22, 0b000_1010             //Contador de minutos
-000095 f051                      	BREQ OVERFLOCONFI
-000096 3f6f                      	CPI R22, 0b1111_1111
-000097 f009                      	BREQ UNDERFLOCONFI
-000098 cfc0                      	RJMP loop
+0000a3 2d66                      	MOV R22, R6					
+0000a4 306a                      	CPI R22, 0b000_1010             //Contador de minutos
+0000a5 f059                      	BREQ OVERFLOCONFI
+0000a6 3f6f                      	CPI R22, 0b1111_1111
+0000a7 f009                      	BREQ UNDERFLOCONFI
+0000a8 cfbe                      	RJMP loop
                                  
                                  UNDERFLOCONFI:
-000099 952a                      	DEC R18
-00009a 3f2f                      	CPI R18, 0b1111_1111
-00009b f419                      	BRNE CONFIA1
-00009c e069                      	LDI R22, 9
-00009d e025                      	LDI R18, 5
-00009e cfba                      	RJMP loop
+0000a9 e069                      	LDI R22, 9
+0000aa 952a                      	DEC R18
+0000ab 3f2f                      	CPI R18, 0xFF
+0000ac f419                      	BRNE CONFIA1
+0000ad e069                      	LDI R22, 9
+0000ae e025                      	LDI R18, 5
+0000af cfb7                      	RJMP loop
                                  CONFIA1:
-00009f cfb9                      	RJMP loop
+0000b0 cfb6                      	RJMP loop
                                  OVERFLOCONFI:
-0000a0 2766                      	CLR R22
-0000a1 9523                      	INC R18                         //Contador de decenas
-0000a2 3026                      	CPI R18, 0b000_0110
-0000a3 f009                      	BREQ OVERFLOCONFI2
-0000a4 cfb4                      	RJMP loop
+0000b1 2766                      	CLR R22
+0000b2 9523                      	INC R18                         //Contador de decenas
+0000b3 3026                      	CPI R18, 0b000_0110
+0000b4 f009                      	BREQ OVERFLOCONFI2
+0000b5 cfb1                      	RJMP loop
                                  OVERFLOCONFI2:
-0000a5 2722                      	CLR R18
-0000a6 cfb2                      	RJMP loop
+0000b6 2722                      	CLR R18
+0000b7 cfaf                      	RJMP loop
                                  
                                  CONFIVERI2:
-0000a7 2d76                      	MOV R23, R6
-0000a8 3092                      	CPI R25, 0b000_0010
-0000a9 f071                      	BREQ CONFITOP24                       //Contador de horas
-0000aa 307a                      	CPI R23, 0b000_1010
-0000ab f049                      	BREQ OVERFLOCONFI3
-0000ac 3f7f                      	CPI R23, 0b1111_1111
-0000ad f009                      	BREQ UNDERFLOCONFI2
-0000ae cfaa                      	rjmp loop
+0000b8 2d76                      	MOV R23, R6
+0000b9 3f7f                      	CPI R23, 0b1111_1111
+0000ba f039                      	BREQ UNDERFLOCONFI2
+0000bb 3092                      	CPI R25, 0b000_0010
+0000bc f079                      	BREQ CONFITOP24                       //Contador de horas
+0000bd 307a                      	CPI R23, 0b000_1010
+0000be f051                      	BREQ OVERFLOCONFI3
+0000bf 3f7f                      	CPI R23, 0b1111_1111
+0000c0 f009                      	BREQ UNDERFLOCONFI2
+0000c1 cfa5                      	rjmp loop
                                  UNDERFLOCONFI2:
-0000af 959a                      	DEC R25
-0000b0 3f9f                      	CPI R25, 0b1111_1111
-0000b1 f459                      	BRNE CONFIFIN
-0000b2 e092                      	LDI R25, 2
-0000b3 e073                      	LDI R23, 3
-0000b4 cfa4                      	RJMP loop
+0000c2 e079                      	LDI R23, 9
+0000c3 959a                      	DEC R25
+0000c4 3f9f                      	CPI R25, 0b1111_1111
+0000c5 f459                      	BRNE CONFIFIN
+0000c6 e092                      	LDI R25, 2
+0000c7 e073                      	LDI R23, 3
+0000c8 cf9e                      	RJMP loop
                                  OVERFLOCONFI3:
-0000b5 2777                      	CLR R23
-0000b6 9593                      	INC R25                         //Contador de decenas de horas
-0000b7 cfa1                      	rjmp loop
+0000c9 2777                      	CLR R23
+0000ca 9593                      	INC R25                         //Contador de decenas de horas
+0000cb cf9b                      	rjmp loop
                                  CONFITOP24:
-0000b8 3074                      	CPI R23, 0b0000_0100
-0000b9 f009                      	BREQ CONFITOP2
-0000ba cf9e                      	RJMP loop
+0000cc 3074                      	CPI R23, 0b0000_0100
+0000cd f009                      	BREQ CONFITOP2
+0000ce cf98                      	RJMP loop
                                  CONFITOP2:
-0000bb 2777                      	CLR R23
-0000bc 2799                      	CLR R25
+0000cf 2777                      	CLR R23
+0000d0 2799                      	CLR R25
                                  CONFIFIN:
-0000bd cf9b                      	RJMP loop
+0000d1 cf95                      	RJMP loop
+                                 //*****************************************************************
+                                 //                            FECHA
+                                 //*****************************************************************
                                  ESTADOFECHA:
-0000be ff31                      	SBRS R19, 1
-0000bf c02d                      	RJMP ESTADOALARMA
-0000c0 9a44                      	SBI PORTC, PC4
-0000c1 9845                      	CBI PORTC, PC5
+0000d2 ff31                      	SBRS R19, 1
+0000d3 c091                      	RJMP ESTADOALARMA
+0000d4 9a44                      	SBI PORTC, PC4
+0000d5 9845                      	CBI PORTC, PC5
                                  
-0000c2 e0f0                      	LDI ZH, HIGH(TABLA7SEG << 1)
-0000c3 e4e0                      	LDI ZL, LOW(TABLA7SEG << 1)
-0000c4 0de0                      	ADD ZL, R0
-0000c5 9a41                      	SBI PORTC, PC1
-0000c6 9144                      	LPM R20, Z
-0000c7 b94b                      	OUT PORTD, R20
-0000c8 940e 00fd                 	CALL delaybounce3
-0000ca 9841                      	CBI PORTC, PC1
+0000d6 e0f0                      	LDI ZH, HIGH(TABLA7SEG << 1)
+0000d7 e4ec                      	LDI ZL, LOW(TABLA7SEG << 1)
+0000d8 0de0                      	ADD ZL, R0
+0000d9 9a41                      	SBI PORTC, PC1
+0000da 9144                      	LPM R20, Z
+0000db b94b                      	OUT PORTD, R20
+0000dc 940e 01d8                 	CALL delaybounce3
+0000de 9841                      	CBI PORTC, PC1
                                  
                                  
-0000cb e0f0                      	LDI ZH, HIGH(TABLA7SEG << 1)
-0000cc e4e0                      	LDI ZL, LOW(TABLA7SEG << 1)
-0000cd 0de2                      	ADD ZL, R2
-0000ce 9a40                      	SBI PORTC, PC0
-0000cf 9144                      	LPM R20, Z
-0000d0 b94b                      	OUT PORTD, R20
+0000df e0f0                      	LDI ZH, HIGH(TABLA7SEG << 1)
+0000e0 e4ec                      	LDI ZL, LOW(TABLA7SEG << 1)
+0000e1 0de2                      	ADD ZL, R2
+0000e2 9a40                      	SBI PORTC, PC0
+0000e3 9144                      	LPM R20, Z
+0000e4 b94b                      	OUT PORTD, R20
                                  
-0000d1 940e 00fd                 	CALL delaybounce3
+0000e5 940e 01d8                 	CALL delaybounce3
                                  
-0000d3 9840                      	CBI PORTC, PC0
+0000e7 9840                      	CBI PORTC, PC0
                                  
-0000d4 e0f0                      	LDI ZH, HIGH(TABLA7SEG << 1)
-0000d5 e4e0                      	LDI ZL, LOW(TABLA7SEG << 1)
-0000d6 0de3                      	ADD ZL, R3
-0000d7 9a42                      	SBI PORTC, PC2
-0000d8 ffb0                      	SBRS r27, 0
-0000d9 9a5f                      	SBI PORTD, PD7
-0000da 985f                      	CBI PORTD, PD7
-0000db 9144                      	LPM R20, Z
-0000dc b94b                      	OUT PORTD, R20
-0000dd 940e 00fd                 	CALL delaybounce3
-0000df 9842                      	CBI PORTC, PC2
+0000e8 e0f0                      	LDI ZH, HIGH(TABLA7SEG << 1)
+0000e9 e4ec                      	LDI ZL, LOW(TABLA7SEG << 1)
+0000ea 0de3                      	ADD ZL, R3
+0000eb 9a42                      	SBI PORTC, PC2
+0000ec 9144                      	LPM R20, Z
+0000ed b94b                      	OUT PORTD, R20
+0000ee 940e 01d8                 	CALL delaybounce3
+0000f0 9842                      	CBI PORTC, PC2
                                  
-0000e0 e0f0                      	LDI ZH, HIGH(TABLA7SEG << 1)
-0000e1 e4e0                      	LDI ZL, LOW(TABLA7SEG << 1)
-0000e2 0de4                      	ADD ZL, R4
-0000e3 9a43                      	SBI PORTC, PC3
-0000e4 9144                      	LPM R20, Z
-0000e5 b94b                      	OUT PORTD, R20
-0000e6 940e 00fd                 	CALL delaybounce3
-0000e8 9843                      	CBI PORTC, PC3
-0000e9 ff33                      	SBRS R19, 3
-0000ea c001                      	RJMP CONFIF
-0000eb cf6d                      	RJMP loop
+0000f1 e0f0                      	LDI ZH, HIGH(TABLA7SEG << 1)
+0000f2 e4ec                      	LDI ZL, LOW(TABLA7SEG << 1)
+0000f3 0de4                      	ADD ZL, R4
+0000f4 9a43                      	SBI PORTC, PC3
+0000f5 9144                      	LPM R20, Z
+0000f6 b94b                      	OUT PORTD, R20
+0000f7 940e 01d8                 	CALL delaybounce3
+0000f9 9843                      	CBI PORTC, PC3
+0000fa ff33                      	SBRS R19, 3
+0000fb c0d4                      	RJMP ENCENDERMASK
+0000fc c000                      	RJMP CONFIF
+                                 //*****************************************************************
+                                 //CONFIGURACION DE FECHA
+                                 //*****************************************************************
                                  CONFIF:
-0000ec cf6c                      	RJMP loop
+0000fd e000                      	LDI R16, 0b0000_0000
+0000fe 9300 006f                 	STS TIMSK1, R16
+                                 	
+000100 fc70                      	SBRC R7, 0
+000101 c045                      	RJMP CONFINM
+                                 //********************************************************************************************************************************************
+                                 //------------------------------------------------------------DIA-----------------------------------------------------------------------------
+                                 //********************************************************************************************************************************************
+                                 CONFIFECHA1:
+000102 9a2d                      	SBI PORTB, PB5
+000103 2c06                      	MOV R0, R6
+000104 1409                      	CP R0, R9
+000105 f051                      	BREQ CONFINICRE7
+000106 e082                      	LDI R24, 2
+000107 1618                      	CP R1, R24
+000108 f441                      	BRNE CONFICOMP
+000109 e082                      	LDI R24, 2
+00010a 1628                      	CP R2, R24
+00010b f429                      	BRNE CONFICOMP
+00010c e089                      	LDI R24, 9
+00010d 1608                      	CP R0, R24
+00010e f1c1                      	BREQ CONFINM
+00010f cf57                      	RJMP loop
+                                 CONFINICRE7:
+000110 cf56                      	RJMP loop
+                                 CONFICOMP:
+000111 e083                      	LDI R24, 3
+000112 1628                      	CP R2, R24
+000113 f021                      	BREQ CONFITOPDIA
+                                 CONFISUMANORM:
+000114 e08a                      	LDI R24, 10
+000115 1608                      	CP R0, R24
+000116 f159                      	BREQ CONFICD
+                                 
+000117 cf4f                      	RJMP loop
+                                 CONFITOPDIA:
+000118 e081                      	LDI R24, 1
+000119 1618                      	CP R1, R24
+00011a f0f9                      	BREQ CONFIPR1
+                                 
+00011b e083                      	LDI R24, 3
+00011c 1618                      	CP R1, R24
+00011d f0e1                      	BREQ CONFIPR1
+                                 
+00011e e084                      	LDI R24, 4
+00011f 1618                      	CP R1, R24
+000120 f0e9                      	BREQ CONFIPR2
+                                 
+000121 e085                      	LDI R24, 5
+000122 1618                      	CP R1, R24
+000123 f0b1                      	BREQ CONFIPR1
+                                 
+000124 e086                      	LDI R24, 6
+000125 1618                      	CP R1, R24
+000126 f0b9                      	BREQ CONFIPR2
+                                 
+000127 e087                      	LDI R24, 7
+000128 1618                      	CP R1, R24
+000129 f081                      	BREQ CONFIPR1
+                                 
+00012a e088                      	LDI R24, 8
+00012b 1618                      	CP R1, R24
+00012c f069                      	BREQ CONFIPR1
+                                 
+00012d e089                      	LDI R24, 9
+00012e 1618                      	CP R1, R24
+00012f f071                      	BREQ CONFIPR2
+                                 
+000130 e08a                      	LDI R24, 10
+000131 1618                      	CP R1, R24
+000132 f039                      	BREQ CONFIPR1
+                                 
+000133 e08b                      	LDI R24, 11
+000134 1618                      	CP R1, R24
+000135 f041                      	BREQ CONFIPR2
+                                 
+000136 e08c                      	LDI R24, 12
+000137 1618                      	CP R1, R24
+000138 f009                      	BREQ CONFIPR1
+                                 
+000139 cf2d                      	rjmp loop
+                                 CONFIPR1:
+00013a e082                      	LDI R24, 2
+00013b 1608                      	CP R0, R24
+00013c f029                      	BREQ CONFICD
+00013d cf29                      	RJMP loop
+                                 CONFIPR2:
+00013e e081                      	LDI R24, 1
+00013f 1608                      	CP R0, R24
+000140 f009                      	BREQ CONFICD
+000141 cf25                      	RJMP loop
+                                 
+                                 CONFICD:
+000142 2400                      	CLR R0
+000143 9423                      	INC R2
+000144 cf22                      	RJMP loop
+                                 SALTO: 
+000145 2c90                      	MOV R9, R0
+000146 cf20                      	RJMP loop
+                                 
+                                 //********************************************************************************************************************************************
+                                 //------------------------------------------------------------MES-----------------------------------------------------------------------------
+                                 //********************************************************************************************************************************************
+                                 CONFINM:
+000147 2c36                      	MOV R3, R6
+000148 e081                      	LDI R24, 1
+000149 1648                      	CP R4, R24
+00014a f051                      	BREQ CONFITOPMES
+00014b 1439                      	CP R3, R9
+00014c f409                      	BRNE CONFINICRE5
+00014d 9413                      	INC R1
+                                 CONFINICRE5:
+00014e e08a                      	LDI R24, 10
+00014f 1638                      	CP R3, R24
+000150 f009                      	BREQ CONFITOPNMES
+000151 c010                      	RJMP SALTO2
+                                 CONFITOPNMES:
+000152 2433                      	CLR R3
+000153 9443                      	INC R4
+000154 c00d                      	RJMP SALTO2
+                                 CONFITOPMES:
+000155 1439                      	CP R3, R9
+000156 f409                      	BRNE CONFINICRE6
+000157 9413                      	INC R1
+                                 CONFINICRE6:
+000158 e083                      	LDI R24, 3
+000159 1638                      	CP R3, R24
+00015a f009                      	BREQ CONFICM
+00015b c006                      	RJMP SALTO2
+                                 CONFICM:
+00015c 2411                      	CLR R1
+00015d 2433                      	CLR R3
+00015e 2444                      	CLR R4
+00015f 9433                      	INC R3
+000160 2c93                      	MOV R9, R3
+000161 c000                      	RJMP SALTO2
+                                 SALTO2:
+000162 2c93                      	MOV R9, R3
+000163 cf03                      	RJMP loop
+000164 cf02                      	RJMP loop
+                                 //*****************************************************************
+                                 //                          ALARMA
+                                 //*****************************************************************
                                  ESTADOALARMA:
-0000ed ff32                      	SBRS R19, 2
-0000ee cf6a                      	RJMP loop
-0000ef 9844                      	CBI PORTC, PC4
-0000f0 9a45                      	SBI PORTC, PC5
-0000f1 ff33                      	SBRS R19, 3
-0000f2 c001                      	RJMP CONFIA
-0000f3 cf65                      	RJMP loop
+000165 ff32                      	SBRS R19, 2
+000166 cf00                      	RJMP loop
+000167 9844                      	CBI PORTC, PC4
+000168 9a45                      	SBI PORTC, PC5
+                                 	// DIPLAY 1
+000169 e0f0                      	LDI ZH, HIGH(TABLA7SEG << 1)
+00016a e4ec                      	LDI ZL, LOW(TABLA7SEG << 1)
+00016b 0deb                      	ADD ZL, R11
+00016c 9a41                      	SBI PORTC, PC1
+00016d 9144                      	LPM R20, Z
+00016e b94b                      	OUT PORTD, R20
+00016f 940e 01d8                 	CALL delaybounce3
+000171 9841                      	CBI PORTC, PC1
+                                 
+                                 	// DIPLAY 2
+000172 e0f0                      	LDI ZH, HIGH(TABLA7SEG << 1)
+000173 e4ec                      	LDI ZL, LOW(TABLA7SEG << 1)
+000174 0dec                      	ADD ZL, R12
+000175 9a40                      	SBI PORTC, PC0
+000176 9144                      	LPM R20, Z
+000177 b94b                      	OUT PORTD, R20
+000178 940e 01d8                 	CALL delaybounce3
+00017a 9840                      	CBI PORTC, PC0
+                                 
+                                 	// DIPLAY 3
+00017b e0f0                      	LDI ZH, HIGH(TABLA7SEG << 1)
+00017c e4ec                      	LDI ZL, LOW(TABLA7SEG << 1)
+00017d 0ded                      	ADD ZL, R13
+00017e 9a42                      	SBI PORTC, PC2
+00017f 9144                      	LPM R20, Z
+000180 b94b                      	OUT PORTD, R20
+000181 940e 01d8                 	CALL delaybounce3
+000183 9842                      	CBI PORTC, PC2
+                                 
+                                 	// DIPLAY 4
+000184 e0f0                      	LDI ZH, HIGH(TABLA7SEG << 1)
+000185 e4ec                      	LDI ZL, LOW(TABLA7SEG << 1)
+000186 0dee                      	ADD ZL, R14
+000187 9a43                      	SBI PORTC, PC3
+000188 9144                      	LPM R20, Z
+000189 b94b                      	OUT PORTD, R20
+00018a 940e 01d8                 	CALL delaybounce3
+00018c 9843                      	CBI PORTC, PC3
+                                 
+00018d ff33                      	SBRS R19, 3
+00018e ced8                      	RJMP loop
+00018f c000                      	RJMP CONFIA
+                                 //*****************************************************************
+                                 //                          CONFIGURACION DE ALARMA
+                                 //*****************************************************************
                                  CONFIA:
-0000f4 cf64                      	RJMP loop
+000190 9a2d                      	SBI PORTB, PB5
+000191 fc70                      	SBRC R7, 0
+000192 c01b                      	RJMP CONFIVERI6
+                                 CONFIVERI5:
+000193 e08a                      	LDI R24, 0b000_1010	
+000194 16b8                      	CP R11, R24             //Contador de minutos
+000195 f081                      	BREQ OVERFLOCONFI5
+000196 ef8f                      	LDI R24, 0b1111_1111	
+000197 16b8                      	CP R11, R24   
+000198 f009                      	BREQ UNDERFLOCONFI5
+000199 cecd                      	RJMP loop
+                                 
+                                 UNDERFLOCONFI5:
+00019a e089                      	LDI R24, 9
+00019b 2eb8                      	MOV R11, R24
+00019c 94ca                      	DEC R12
+00019d ef8f                      	LDI R24, 0xFF
+00019e 16c8                      	CP R12, R24
+00019f f429                      	BRNE CONFIA5
+0001a0 e089                      	LDI R24, 9
+0001a1 2eb8                      	MOV R11, R24
+0001a2 e085                      	LDI R24, 5
+0001a3 2ec8                      	MOV R12, R24
+0001a4 cec2                      	RJMP loop
+                                 CONFIA5:
+0001a5 cec1                      	RJMP loop
+                                 OVERFLOCONFI5:
+0001a6 24bb                      	CLR R11
+0001a7 94c3                      	INC R12
+0001a8 e086                      	LDI R24, 0b000_0110                         //Contador de decenas
+0001a9 158c                      	CP R24, R12
+0001aa f009                      	BREQ OVERFLOCONFI6
+0001ab cebb                      	RJMP loop
+                                 OVERFLOCONFI6:
+0001ac 24cc                      	CLR R12
+0001ad ceb9                      	RJMP loop
+                                 
+                                 CONFIVERI6:
+0001ae ef8f                      	LDI R24, 0b1111_1111
+0001af 158d                      	CP R24, R13
+0001b0 f051                      	BREQ UNDERFLOCONFI6
+0001b1 e082                      	LDI R24, 0b000_0010
+0001b2 158e                      	CP R24, R14
+0001b3 f0a9                      	BREQ CONFITOP245                       //Contador de horas
+0001b4 e08a                      	LDI R24, 0b000_1010
+0001b5 158d                      	CP R24, R13
+0001b6 f079                      	BREQ OVERFLOCONFI7
+0001b7 ef8f                      	LDI R24, 0b1111_1111
+0001b8 158d                      	CP R24, R13
+0001b9 f009                      	BREQ UNDERFLOCONFI6
+0001ba ceac                      	rjmp loop
+                                 UNDERFLOCONFI6:
+0001bb e089                      	LDI R24, 9
+0001bc 2ed8                      	MOV R13, R24
+0001bd 94ea                      	DEC R14
+0001be ef8f                      	LDI R24, 0b1111_1111
+0001bf 158e                      	CP R24, R14
+0001c0 f471                      	BRNE CONFIFIN5
+0001c1 e082                      	LDI R24, 2
+0001c2 2ee8                      	MOV R14, R24
+0001c3 e083                      	LDI R24, 3
+0001c4 2ed8                      	MOV R13, R24
+0001c5 cea1                      	RJMP loop
+                                 OVERFLOCONFI7:
+0001c6 24dd                      	CLR R13
+0001c7 94e3                      	INC R14                         //Contador de decenas de horas
+0001c8 ce9e                      	rjmp loop
+                                 CONFITOP245:
+0001c9 e084                      	LDI R24, 0b0000_0100
+0001ca 16d8                      	CP R13, R24
+0001cb f009                      	BREQ CONFITOP25
+0001cc ce9a                      	RJMP loop
+                                 CONFITOP25:
+0001cd 24dd                      	CLR R13
+0001ce 24ee                      	CLR R14
+                                 CONFIFIN5:
+0001cf ce97                      	RJMP loop
+                                 //*****************************************************************
+                                 //                      ENCENDER MASCARAS
+                                 //*****************************************************************
                                  ENCENDERMASK:
-0000f5 e001                      	LDI R16, 0b0000_0001
-0000f6 9300 006f                 	STS TIMSK1, R16
-0000f8 cf60                      	RJMP loop
+0001d0 e001                      	LDI R16, 0b0000_0001
+0001d1 9300 006f                 	STS TIMSK1, R16
+0001d3 ce93                      	RJMP loop
                                  //*****************************************************************************
                                  // Sub-rutinas
                                  //*****************************************************************************
                                  
                                  delaybounce2:
-0000f9 ef0f                      	LDI R16, 255
+0001d4 ef0f                      	LDI R16, 255
                                  
                                  	delay2:
-0000fa 950a                      		DEC R16
-0000fb f7f1                      		BRNE delay2
-0000fc 9508                      	ret
+0001d5 950a                      		DEC R16
+0001d6 f7f1                      		BRNE delay2
+0001d7 9508                      	ret
                                  
                                  delaybounce3:
-0000fd ef8f                      	LDI R24, 255
+0001d8 ef8f                      	LDI R24, 255
                                  	delay3:
-0000fe e604                      	LDI R16, 100
+0001d9 e604                      	LDI R16, 100
                                  	delay4:
-0000ff 950a                      		DEC R16
-000100 f7f1                      		BRNE delay4
-000101 958a                      		DEC r24
-000102 f7d9                      		BRNE delay3
-000103 9508                      	ret
+0001da 950a                      		DEC R16
+0001db f7f1                      		BRNE delay4
+0001dc 958a                      		DEC r24
+0001dd f7d9                      		BRNE delay3
+0001de 9508                      	ret
+                                 IdelayT0:
+0001df e005                      	LDI R16, (1 << CS02) | (1 << CS00)
+0001e0 bd05                      	OUT TCCR0B, R16
                                  
+0001e1 e604                      	LDI R16, 100
+0001e2 bd06                      	OUT TCNT0, R16
+                                 
+0001e3 9508                      	RET
                                  IdelayT1:
-000104 e003                      	LDI R16, 0b0000_0011
-000105 9300 0081                 	STS TCCR1B, R16
+0001e4 e003                      	LDI R16, 0b0000_0011
+0001e5 9300 0081                 	STS TCCR1B, R16
                                  
-000107 ef0e                      	LDI R16, HIGH(T1Value)
-000108 9300 0085                 	STS TCNT1H, R16
+0001e7 e00b                      	LDI R16, HIGH(T1Value)
+0001e8 9300 0085                 	STS TCNT1H, R16
                                  
-00010a e107                      	LDI R16, LOW(T1Value)
-00010b 9300 0084                 	STS TCNT1L, R16
-00010d 2700                      	clr R16
+0001ea ed0c                      	LDI R16, LOW(T1Value)
+0001eb 9300 0084                 	STS TCNT1L, R16
+0001ed 2700                      	clr R16
                                  
                                  
-00010e 9508                      	RET
+0001ee 9508                      	RET
                                  //***********************************************************************************
                                  //PCINT0
                                  //***********************************************************************************
                                  ISR_PCINT0:
-00010f 930f                      	PUSH R16
-000110 b70f                      	IN R16, SREG
-000111 930f                      	PUSH R16
+0001ef 930f                      	PUSH R16
+0001f0 b70f                      	IN R16, SREG
+0001f1 930f                      	PUSH R16
                                  
-000112 95a3                      	INC R26
-000113 ffa1                      	SBRS R26, 1
-000114 c036                      	RJMP FIN
-                                 
-000115 fd33                      	SBRC R19, 3
-000116 c014                      	RJMP CONFIINT
+0001f2 95a3                      	INC R26
+0001f3 ffa1                      	SBRS R26, 1
+0001f4 c05c                      	RJMP FIN
+0001f5 fd33                      	SBRC R19, 3
+0001f6 c015                      	RJMP CONFIINT
                                  Verificar:
-000117 27aa                      	CLR R26
-000118 ff50                      	SBRS R21, 0
-000119 c005                      	RJMP INCRE
-00011a ff51                      	SBRS R21, 1
-00011b c005                      	RJMP INCRE2
-00011c ff52                      	SBRS R21, 2
-00011d c005                      	RJMP INCRE3
-00011e c006                      	RJMP INCRE4
+0001f7 27aa                      	CLR R26
+0001f8 ff50                      	SBRS R21, 0
+0001f9 c005                      	RJMP INCRE
+0001fa ff51                      	SBRS R21, 1
+0001fb c005                      	RJMP INCRE2
+0001fc ff52                      	SBRS R21, 2
+0001fd c005                      	RJMP INCRE3
+0001fe c006                      	RJMP INCRE4
                                  INCRE:
-00011f e031                      	LDI R19, 0b0001
-000120 c02a                      	RJMP FIN
+0001ff e031                      	LDI R19, 0b0001
+000200 c050                      	RJMP FIN
                                  INCRE2: 
-000121 e032                      	LDI R19, 0b0010
-000122 c028                      	RJMP FIN
+000201 e032                      	LDI R19, 0b0010
+000202 c04e                      	RJMP FIN
                                  INCRE3: 
-000123 e034                      	LDI R19, 0b0100
-000124 c026                      	RJMP FIN
+000203 e034                      	LDI R19, 0b0100
+000204 c04c                      	RJMP FIN
                                  INCRE4: 
-000125 2e53                      	MOV R5, R19
-000126 e038                      	LDI R19, 0b1000
-000127 2935                      	OR R19, R5
-000128 c022                      	RJMP FIN
+000205 9a2d                      	SBI PORTB, PB5
+000206 2e53                      	MOV R5, R19
+000207 e038                      	LDI R19, 0b1000
+000208 2935                      	OR R19, R5
+000209 c047                      	RJMP FIN
                                  APAGARCONFI:
-000129 7f3c                      	CBR R19, PC3
-00012a c020                      	RJMP FIN
+00020a 7f3c                      	CBR R19, PC3
+00020b c045                      	RJMP FIN
                                  CONFIINT:
-00012b 27aa                      	CLR R26
-00012c ff50                      	SBRS R21, 0
-00012d c007                      	RJMP CONFI1
-00012e ff51                      	SBRS R21, 1
-00012f c00b                      	RJMP CONFI2
-000130 ff52                      	SBRS R21, 2
-000131 c00f                      	RJMP CONFI3
-000132 ff53                      	SBRS R21, 3
-000133 c012                      	RJMP CONFI4
-000134 c016                      	RJMP FIN
+00020c 27aa                      	CLR R26
+00020d ff50                      	SBRS R21, 0
+00020e c007                      	RJMP CONFI1
+00020f ff51                      	SBRS R21, 1
+000210 c01d                      	RJMP CONFI2
+000211 ff52                      	SBRS R21, 2
+000212 c033                      	RJMP CONFI3
+000213 ff53                      	SBRS R21, 3
+000214 c036                      	RJMP CONFI4
+000215 c03b                      	RJMP FIN
+                                 //*****************************************************************************************************************************//
                                  CONFI1:
-000135 fe70                      	SBRS R7, 0
-000136 2e66                      	MOV R6, R22
-000137 fc70                      	SBRC R7, 0
-000138 2e67                      	MOV R6, R23
-000139 9463                      	INC R6
-00013a c010                      	RJMP FIN
+                                 //*************************
+                                 //CONFI HORA
+                                 //*************************
+000216 ff30                      	SBRS R19, 0
+000217 c005                      	RJMP CONFIGURARFECHA1
+000218 fe70                      	SBRS R7, 0
+000219 2e66                      	MOV R6, R22
+00021a fc70                      	SBRC R7, 0
+00021b 2e67                      	MOV R6, R23
+00021c c00f                      	RJMP CONFI11
+                                 //*************************
+                                 //CONFI FECHA
+                                 //*************************
+                                 CONFIGURARFECHA1:
+00021d ff31                      	SBRS R19, 1
+00021e c005                      	RJMP CONFIGURARALARMA1
+00021f fe70                      	SBRS R7, 0
+000220 2c60                      	MOV R6, R0
+000221 fc70                      	SBRC R7, 0
+000222 2c63                      	MOV R6, R3
+000223 c008                      	RJMP CONFI11
+                                 //*************************
+                                 //CONFI ALARMA
+                                 //*************************
+                                 CONFIGURARALARMA1:
+000224 ff32                      	SBRS R19, 2
+000225 c02b                      	RJMP FIN
+000226 fe70                      	SBRS R7, 0
+000227 94b3                      	INC R11
+000228 fc70                      	SBRC R7, 0
+000229 94d3                      	INC R13
+00022a c000                      	RJMP CONFI12
+                                 CONFI12:
+00022b c025                      	RJMP FIN
+                                 CONFI11:
+00022c 9463                      	INC R6
+00022d c023                      	RJMP FIN
+                                 //*****************************************************************************************************************************//
                                  CONFI2: 
-00013b fe70                      	SBRS R7, 0
-00013c 2e66                      	MOV R6, R22
-00013d fc70                      	SBRC R7, 0
-00013e 2e67                      	MOV R6, R23
-00013f 946a                      	DEC R6
-000140 c00a                      	RJMP FIN
+                                 //*************************
+                                 //CONFI HORA
+                                 //*************************
+00022e ff30                      	SBRS R19, 0
+00022f c005                      	RJMP CONFIGURARFECHA2
+000230 fe70                      	SBRS R7, 0
+000231 2e66                      	MOV R6, R22
+000232 fc70                      	SBRC R7, 0
+000233 2e67                      	MOV R6, R23
+000234 c00f                      	RJMP CONFI21
+                                 //*************************
+                                 //CONFI FECHA
+                                 //*************************
+                                 CONFIGURARFECHA2:
+000235 ff31                      	SBRS R19, 1
+000236 c005                      	RJMP CONFIGURARALARMA2
+000237 fe70                      	SBRS R7, 0
+000238 2c60                      	MOV R6, R0
+000239 fc70                      	SBRC R7, 0
+00023a 2c63                      	MOV R6, R3
+00023b c008                      	RJMP CONFI21
+                                 //*************************
+                                 //CONFI ALARMA
+                                 //*************************
+                                 CONFIGURARALARMA2:
+00023c ff32                      	SBRS R19, 2
+00023d c013                      	RJMP FIN
+00023e fe70                      	SBRS R7, 0
+00023f 94ba                      	DEC R11
+000240 fc70                      	SBRC R7, 0
+000241 94da                      	DEC R13
+000242 c000                      	RJMP CONFI22
+                                 CONFI22:
+000243 c00d                      	RJMP FIN
+                                 CONFI21:
+000244 946a                      	DEC R6
+000245 c00b                      	RJMP FIN
+                                 //*****************************************************************************************************************************//
                                  CONFI3: 
-000141 9473                      	INC R7
-000142 e082                      	LDI R24, 2
-000143 1587                      	CP R24, R7
-000144 f021                      	BREQ OVERCONFI3
-000145 c005                      	RJMP FIN
+000246 9473                      	INC R7
+000247 e082                      	LDI R24, 2
+000248 1587                      	CP R24, R7
+000249 f029                      	BREQ OVERCONFI3
+00024a c006                      	RJMP FIN
+                                 //*****************************************************************************************************************************//
                                  CONFI4:
-000146 e087                      	LDI R24, 0b0111
-000147 2338                      	AND R19, R24
-000148 c002                      	RJMP FIN
+00024b 982d                      	CBI PORTB, PB5
+00024c e087                      	LDI R24, 0b0111
+00024d 2338                      	AND R19, R24
+00024e c002                      	RJMP FIN
                                  OVERCONFI3:
-000149 2477                      	CLR R7
-00014a c000                      	RJMP FIN
+00024f 2477                      	CLR R7
+000250 c000                      	RJMP FIN
                                  FIN:
-00014b b153                      	IN R21, PINB
-00014c 910f                      	POP R16
-00014d bf0f                      	OUT SREG, R16
-00014e 910f                      	POP R16
-00014f 9518                      	RETI
+000251 b153                      	IN R21, PINB
+000252 910f                      	POP R16
+000253 bf0f                      	OUT SREG, R16
+000254 910f                      	POP R16
+000255 9518                      	RETI
+                                 //***********************************************************************************
+                                 //TIMER1
+                                 //***********************************************************************************
+                                 TIM1_OVF:
+000256 930f                      	PUSH R16
+000257 b70f                      	IN R16, SREG
+000258 930f                      	PUSH R16
+                                 
+000259 e00b                      	LDI R16, HIGH(T1Value)
+00025a 9300 0085                 	STS TCNT1H, R16
+                                 
+00025c ed0c                      	LDI R16, LOW(T1Value)
+00025d 9300 0084                 	STS TCNT1L, R16
+                                 
+00025f 16e9                      	CP R14, R25
+000260 f449                      	BRNE NADA
+000261 16d7                      	CP R13, R23
+000262 f439                      	BRNE NADA
+000263 16c2                      	CP R12, R18
+000264 f429                      	BRNE NADA
+000265 16b6                      	CP R11, R22
+000266 f419                      	BRNE NADA
+000267 e001                      	LDI R16, 0b0000_0001
+000268 9300 006e                 	STS TIMSK0, R16
+                                 NADA:
+00026a e081                      	LDI R24, 1
+00026b 94a3                      	INC R10
+00026c 16a8                      	CP R10, R24
+00026d f449                      	BRNE SUMA
+                                 
+00026e ffb0                      	SBRS R27, 0
+00026f c001                      	RJMP ENP
+000270 c003                      	RJMP APP
+                                 ENP:
+000271 24aa                      	CLR r10
+000272 e0b1                      	LDI R27, 0b1
+000273 c003                      	RJMP SUMA
+                                 APP:
+000274 24aa                      	CLR r10
+000275 e0b0                      	LDI R27, 0b0
+000276 c000                      	RJMP SUMA
+                                 SUMA:
+000277 9513                      	INC R17 
+000278 3f10                      	CPI R17, 240
+000279 f429                      	BRNE FIN3
+00027a 2711                      	CLR r17
+                                 SUM:
+00027b 9563                          INC R22						//Contador de minutos
+00027c 306a                      	CPI R22, 0b000_1010
+00027d f029                          BREQ OVERFLO
+00027e c076                      	RJMP FIN2
+                                 FIN3:
+00027f 910f                      	POP R16
+000280 bf0f                      	OUT SREG, R16
+000281 910f                      	POP R16
+000282 9518                      	RETI
+                                 OVERFLO:
+000283 2766                      	CLR R22
+000284 9523                      	INC R18                         //Contador de decenas
+000285 3026                      	CPI R18, 0b000_0110
+000286 f009                      	BREQ OVERFLO2
+000287 c06d                      	RJMP FIN2
+                                 OVERFLO2:
+000288 2722                      	CLR R18
+000289 9573                      	INC R23  
+00028a 3092                      	CPI R25, 0b000_0010
+00028b f031                      	BREQ TOP24                       //Contador de horas
+00028c 307a                      	CPI R23, 0b000_1010
+00028d f009                      	BREQ OVERFLO3
+00028e c066                      	rjmp FIN2
+                                 OVERFLO3:
+00028f 2777                      	CLR R23
+000290 9593                      	INC R25                         //Contador de decenas de horas
+000291 c063                      	rjmp FIN2
+                                 TOP24:
+000292 3074                      	CPI R23, 0b0000_0100
+000293 f009                      	BREQ TOP2
+000294 c060                      	RJMP FIN2
+                                 TOP2:
+000295 2777                      	CLR R23
+000296 2766                      	CLR R22
+000297 2722                      	CLR R18
+000298 2799                      	CLR R25
+                                 
+                                 //EValua si ya va por dia 3X
+000299 e082                      	LDI R24, 2
+00029a 1618                      	CP R1, R24
+00029b f441                      	BRNE COMP
+00029c e082                      	LDI R24, 2
+00029d 1628                      	CP R2, R24
+00029e f429                      	BRNE COMP
+00029f e089                      	LDI R24, 9
+0002a0 9403                      	INC R0 
+0002a1 1608                      	CP R0, R24
+0002a2 f1c1                      	BREQ NM
+0002a3 c051                      	RJMP FIN2
+                                 COMP:
+0002a4 e083                      	LDI R24, 3
+0002a5 1628                      	CP R2, R24
+0002a6 f029                      	BREQ TOPDIA
+                                 SUMANORM:
+0002a7 e08a                      	LDI R24, 10
+0002a8 9403                      	INC R0 
+0002a9 1608                      	CP R0, R24
+0002aa f169                      	BREQ CD
+                                 
+0002ab c049                      	RJMP FIN2
+                                 TOPDIA:
+0002ac e081                      	LDI R24, 1
+0002ad 1618                      	CP R1, R24
+0002ae f0f9                      	BREQ PR1
+                                 
+0002af e083                      	LDI R24, 3
+0002b0 1618                      	CP R1, R24
+0002b1 f0e1                      	BREQ PR1
+                                 
+0002b2 e084                      	LDI R24, 4
+0002b3 1618                      	CP R1, R24
+0002b4 f0f1                      	BREQ PR2
+                                 
+0002b5 e085                      	LDI R24, 5
+0002b6 1618                      	CP R1, R24
+0002b7 f0b1                      	BREQ PR1
+                                 
+0002b8 e086                      	LDI R24, 6
+0002b9 1618                      	CP R1, R24
+0002ba f0c1                      	BREQ PR2
+                                 
+0002bb e087                      	LDI R24, 7
+0002bc 1618                      	CP R1, R24
+0002bd f081                      	BREQ PR1
+                                 
+0002be e088                      	LDI R24, 8
+0002bf 1618                      	CP R1, R24
+0002c0 f069                      	BREQ PR1
+                                 
+0002c1 e089                      	LDI R24, 9
+0002c2 1618                      	CP R1, R24
+0002c3 f079                      	BREQ PR2
+                                 
+0002c4 e08a                      	LDI R24, 10
+0002c5 1618                      	CP R1, R24
+0002c6 f039                      	BREQ PR1
+                                 
+0002c7 e08b                      	LDI R24, 11
+0002c8 1618                      	CP R1, R24
+0002c9 f049                      	BREQ PR2
+                                 
+0002ca e08c                      	LDI R24, 12
+0002cb 1618                      	CP R1, R24
+0002cc f009                      	BREQ PR1
+                                 
+0002cd c027                      	rjmp FIN2
+                                 PR1:
+0002ce e082                      	LDI R24, 2
+0002cf 9403                      	INC R0 
+0002d0 1608                      	CP R0, R24
+0002d1 f049                      	BREQ NM
+0002d2 c022                      	RJMP FIN2
+                                 PR2:
+0002d3 e081                      	LDI R24, 1
+0002d4 9403                      	INC R0 
+0002d5 1608                      	CP R0, R24
+0002d6 f021                      	BREQ NM
+0002d7 c01d                      	RJMP FIN2
+                                 
+                                 CD:
+0002d8 2400                      	CLR R0
+0002d9 9423                      	INC R2
+0002da c01a                      	RJMP FIN2
+                                 
+                                 NM:
+0002db 2400                      	CLR R0
+0002dc 9403                      	INC R0
+0002dd 2422                      	CLR R2
+0002de e081                      	LDI R24, 1
+0002df 1648                      	CP R4, R24
+0002e0 f049                      	BREQ TOPMES
+0002e1 9413                      	INC R1
+0002e2 9433                      	INC R3
+0002e3 e08a                      	LDI R24, 10
+0002e4 1638                      	CP R3, R24
+0002e5 f009                      	BREQ TOPNMES
+0002e6 c00e                      	RJMP FIN2
+                                 TOPNMES:
+0002e7 2433                      	CLR R3
+0002e8 9443                      	INC R4
+0002e9 c00b                      	RJMP FIN2
+                                 TOPMES:
+0002ea 9433                      	INC R3
+0002eb 9413                      	INC R1
+0002ec e083                      	LDI R24, 3
+0002ed 1638                      	CP R3, R24
+0002ee f009                      	BREQ CM
+0002ef c005                      	RJMP FIN2
+                                 CM:
+0002f0 2411                      	CLR R1
+0002f1 2433                      	CLR R3
+0002f2 2444                      	CLR R4
+0002f3 9413                      	INC R1
+0002f4 9433                      	INC R3
+                                 FIN2:
+0002f5 910f                      	POP R16
+0002f6 bf0f                      	OUT SREG, R16
+0002f7 910f                      	POP R16
+0002f8 9518                      	RETI
+                                 
                                  //***********************************************************************************
                                  //TIMER0
                                  //***********************************************************************************
-                                 TIM1_OVF:
-000150 930f                      	PUSH R16
-000151 b70f                      	IN R16, SREG
-000152 930f                      	PUSH R16
+                                 TIM0_OVF:
+0002f9 930f                      	PUSH R16
+0002fa b70f                      	IN R16, SREG
+0002fb 930f                      	PUSH R16
                                  
-000153 ef0e                      	LDI R16, HIGH(T1Value)
-000154 9300 0085                 	STS TCNT1H, R16
+0002fc e604                      	LDI R16, 100
+0002fd bd06                      	OUT TCNT0, R16
                                  
-000156 e107                      	LDI R16, LOW(T1Value)
-000157 9300 0084                 	STS TCNT1L, R16
-000159 ffb0                      	SBRS R27, 0
-00015a c001                      	RJMP ENP
-00015b c002                      	RJMP APP
-                                 ENP:
-00015c e0b1                      	LDI R27, 0b1
-00015d c002                      	RJMP SUMA
-                                 APP:
-00015e e0b0                      	LDI R27, 0b0
-00015f c000                      	RJMP SUMA
-                                 SUMA:
-                                 	/*INC R17 
-                                 	CPI R17, 240
-                                 	BRNE FIN3
-                                 	CLR r17*/
-                                 SUM:
-000160 9563                          INC R22						//Contador de minutos
-000161 306a                      	CPI R22, 0b000_1010
-000162 f029                          BREQ OVERFLO
-000163 c076                      	RJMP FIN2
-                                 FIN3:
-000164 910f                      	POP R16
-000165 bf0f                      	OUT SREG, R16
-000166 910f                      	POP R16
-000167 9518                      	RETI
-                                 OVERFLO:
-000168 2766                      	CLR R22
-000169 9523                      	INC R18                         //Contador de decenas
-00016a 3026                      	CPI R18, 0b000_0110
-00016b f009                      	BREQ OVERFLO2
-00016c c06d                      	RJMP FIN2
-                                 OVERFLO2:
-00016d 2722                      	CLR R18
-00016e 9573                      	INC R23  
-00016f 3092                      	CPI R25, 0b000_0010
-000170 f031                      	BREQ TOP24                       //Contador de horas
-000171 307a                      	CPI R23, 0b000_1010
-000172 f009                      	BREQ OVERFLO3
-000173 c066                      	rjmp FIN2
-                                 OVERFLO3:
-000174 2777                      	CLR R23
-000175 9593                      	INC R25                         //Contador de decenas de horas
-000176 c063                      	rjmp FIN2
-                                 TOP24:
-000177 3074                      	CPI R23, 0b0000_0100
-000178 f009                      	BREQ TOP2
-000179 c060                      	RJMP FIN2
-                                 TOP2:
-00017a 2777                      	CLR R23
-00017b 2766                      	CLR R22
-00017c 2722                      	CLR R18
-00017d 2799                      	CLR R25
+                                 	
+0002fe 94f3                      	INC R15
+0002ff e684                      	LDI R24, 100
+000300 16f8                      	CP R15, R24
+000301 f4c1                      	BRNE FIN0
+000302 24ff                      	CLR R15
                                  
-                                 //EValua si ya va por dia 3X
-00017e e082                      	LDI R24, 2
-00017f 1618                      	CP R1, R24
-000180 f441                      	BRNE COMP
-000181 e082                      	LDI R24, 2
-000182 1628                      	CP R2, R24
-000183 f429                      	BRNE COMP
-000184 e089                      	LDI R24, 9
-000185 9403                      	INC R0 
-000186 1608                      	CP R0, R24
-000187 f1c1                      	BREQ NM
-000188 c051                      	RJMP FIN2
-                                 COMP:
-000189 e083                      	LDI R24, 3
-00018a 1628                      	CP R2, R24
-00018b f029                      	BREQ TOPDIA
-                                 SUMANORM:
-00018c e08a                      	LDI R24, 10
-00018d 9403                      	INC R0 
-00018e 1608                      	CP R0, R24
-00018f f169                      	BREQ CD
+000303 9b2c                      	SBIS PORTB, PB4
+000304 c002                      	RJMP ENCENDERBUZZ
                                  
-000190 c049                      	RJMP FIN2
-                                 TOPDIA:
-000191 e081                      	LDI R24, 1
-000192 1618                      	CP R1, R24
-000193 f0f9                      	BREQ PR1
+000305 992c                      	SBIC PORTB, PB4
+000306 c009                      	RJMP APAGARBUZZ
                                  
-000194 e083                      	LDI R24, 3
-000195 1618                      	CP R1, R24
-000196 f0e1                      	BREQ PR1
-                                 
-000197 e084                      	LDI R24, 4
-000198 1618                      	CP R1, R24
-000199 f0f1                      	BREQ PR2
-                                 
-00019a e085                      	LDI R24, 5
-00019b 1618                      	CP R1, R24
-00019c f0b1                      	BREQ PR1
-                                 
-00019d e086                      	LDI R24, 6
-00019e 1618                      	CP R1, R24
-00019f f0c1                      	BREQ PR2
-                                 
-0001a0 e087                      	LDI R24, 7
-0001a1 1618                      	CP R1, R24
-0001a2 f081                      	BREQ PR1
-                                 
-0001a3 e088                      	LDI R24, 8
-0001a4 1618                      	CP R1, R24
-0001a5 f069                      	BREQ PR1
-                                 
-0001a6 e089                      	LDI R24, 9
-0001a7 1618                      	CP R1, R24
-0001a8 f079                      	BREQ PR2
-                                 
-0001a9 e08a                      	LDI R24, 10
-0001aa 1618                      	CP R1, R24
-0001ab f039                      	BREQ PR1
-                                 
-0001ac e08b                      	LDI R24, 11
-0001ad 1618                      	CP R1, R24
-0001ae f049                      	BREQ PR2
-                                 
-0001af e08c                      	LDI R24, 12
-0001b0 1618                      	CP R1, R24
-0001b1 f009                      	BREQ PR1
-                                 
-0001b2 c027                      	rjmp FIN2
-                                 PR1:
-0001b3 e082                      	LDI R24, 2
-0001b4 9403                      	INC R0 
-0001b5 1608                      	CP R0, R24
-0001b6 f049                      	BREQ NM
-0001b7 c022                      	RJMP FIN2
-                                 PR2:
-0001b8 e081                      	LDI R24, 1
-0001b9 9403                      	INC R0 
-0001ba 1608                      	CP R0, R24
-0001bb f021                      	BREQ NM
-0001bc c01d                      	RJMP FIN2
-                                 
-                                 CD:
-0001bd 2400                      	CLR R0
-0001be 9423                      	INC R2
-0001bf c01a                      	RJMP FIN2
-                                 
-                                 NM:
-0001c0 2400                      	CLR R0
-0001c1 9403                      	INC R0
-0001c2 2422                      	CLR R2
-0001c3 e081                      	LDI R24, 1
-0001c4 1648                      	CP R4, R24
-0001c5 f049                      	BREQ TOPMES
-0001c6 9413                      	INC R1
-0001c7 9433                      	INC R3
-0001c8 e08a                      	LDI R24, 10
-0001c9 1638                      	CP R3, R24
-0001ca f009                      	BREQ TOPNMES
-0001cb c00e                      	RJMP FIN2
-                                 TOPNMES:
-0001cc 2433                      	CLR R3
-0001cd 9443                      	INC R4
-0001ce c00b                      	RJMP FIN2
-                                 TOPMES:
-0001cf 9433                      	INC R3
-0001d0 9413                      	INC R1
-0001d1 e082                      	LDI R24, 2
-0001d2 1638                      	CP R3, R24
-0001d3 f009                      	BREQ CM
-0001d4 c005                      	RJMP FIN2
-                                 CM:
-0001d5 2411                      	CLR R1
-0001d6 2433                      	CLR R3
-0001d7 2444                      	CLR R4
-0001d8 9413                      	INC R1
-0001d9 9433                      	INC R3
-                                 FIN2:
-0001da 910f                      	POP R16
-0001db bf0f                      	OUT SREG, R16
-0001dc 910f                      	POP R16
+                                 	ENCENDERBUZZ:
+000307 9a2c                      		SBI PORTB, PB4
+000308 9483                      		INC R8
+000309 e38c                      		LDI R24, 60
+00030a 1688                      		CP R8, R24
+00030b f471                      		BRNE FIN0
+00030c e000                      		LDI R16, 0b0000_0000
+00030d 9300 006e                 		STS TIMSK0, R16
+00030f c00a                      		RJMP FIN0
+                                 	APAGARBUZZ:
+000310 982c                      		CBI PORTB, PB4
+000311 9483                      		INC R8
+000312 e38c                      		LDI R24, 60
+000313 1688                      		CP R8, R24
+000314 f429                      		BRNE FIN0
+000315 2488                      		CLR R8
+000316 e000                      		LDI R16, 0b0000_0000
+000317 9300 006e                 		STS TIMSK0, R16
+000319 c000                      		RJMP FIN0
+                                 	FIN0:
+00031a 910f                      	POP R16
+00031b bf0f                      	OUT SREG, R16
+00031c 910f                      	POP R16
 
 
 RESOURCE USE INFORMATION
@@ -1647,39 +2081,39 @@ counted separately from r26..r31 here.
 .dseg memory usage only counts static data declared with .byte
 
 "ATmega328P" register use summary:
-x  :   0 y  :   0 z  :   8 r0 :  14 r1 :  18 r2 :   6 r3 :  10 r4 :   5 
-r5 :   3 r6 :  11 r7 :  12 r8 :   1 r9 :   0 r10:   0 r11:   0 r12:   0 
-r13:   0 r14:   0 r15:   0 r16:  53 r17:   3 r18:  12 r19:  17 r20:  17 
-r21:   9 r22:  14 r23:  17 r24:  49 r25:  11 r26:   5 r27:   6 r28:   1 
-r29:   1 r30:  17 r31:   9 
-Registers used: 26 out of 35 (74.3%)
+x  :   0 y  :   0 z  :  12 r0 :  24 r1 :  33 r2 :   9 r3 :  22 r4 :   8 
+r5 :   3 r6 :  17 r7 :  21 r8 :   6 r9 :   6 r10:   5 r11:  10 r12:   9 
+r13:  13 r14:   9 r15:   4 r16:  73 r17:   6 r18:  13 r19:  23 r20:  25 
+r21:   9 r22:  16 r23:  20 r24: 131 r25:  12 r26:   5 r27:   5 r28:   1 
+r29:   1 r30:  25 r31:  13 
+Registers used: 33 out of 35 (94.3%)
 
 "ATmega328P" instruction use summary:
-.lds  :   0 .sts  :   0 adc   :   0 add   :   8 adiw  :   0 and   :   1 
+.lds  :   0 .sts  :   0 adc   :   0 add   :  12 adiw  :   0 and   :   1 
 andi  :   0 asr   :   0 bclr  :   0 bld   :   0 brbc  :   0 brbs  :   0 
-brcc  :   0 brcs  :   0 break :   0 breq  :  32 brge  :   0 brhc  :   0 
+brcc  :   0 brcs  :   0 break :   0 breq  :  61 brge  :   0 brhc  :   0 
 brhs  :   0 brid  :   0 brie  :   0 brlo  :   0 brlt  :   0 brmi  :   0 
-brne  :   7 brpl  :   0 brsh  :   0 brtc  :   0 brts  :   0 brvc  :   0 
-brvs  :   0 bset  :   0 bst   :   0 call  :   9 cbi   :  15 cbr   :   1 
-clc   :   0 clh   :   0 cli   :   0 cln   :   0 clr   :  32 cls   :   0 
-clt   :   0 clv   :   0 clz   :   0 com   :   0 cp    :  22 cpc   :   0 
-cpi   :  14 cpse  :   0 dec   :   6 eor   :   0 fmul  :   0 fmuls :   0 
-fmulsu:   0 icall :   0 ijmp  :   0 in    :   3 inc   :  26 jmp   :   3 
-ld    :   0 ldd   :   0 ldi   :  85 lds   :   0 lpm   :  16 lsl   :   0 
-lsr   :   0 mov   :   9 movw  :   0 mul   :   0 muls  :   0 mulsu :   0 
-neg   :   0 nop   :   0 or    :   1 ori   :   0 out   :  17 pop   :   6 
-push  :   4 rcall :   0 ret   :   3 reti  :   3 rjmp  :  62 rol   :   0 
-ror   :   0 sbc   :   0 sbci  :   0 sbi   :  13 sbic  :   0 sbis  :   0 
-sbiw  :   0 sbr   :   0 sbrc  :   6 sbrs  :  20 sec   :   0 seh   :   0 
+brne  :  22 brpl  :   0 brsh  :   0 brtc  :   0 brts  :   0 brvc  :   0 
+brvs  :   0 bset  :   0 bst   :   0 call  :  14 cbi   :  19 cbr   :   1 
+clc   :   0 clh   :   0 cli   :   0 cln   :   0 clr   :  53 cls   :   0 
+clt   :   0 clv   :   0 clz   :   0 com   :   0 cp    :  64 cpc   :   0 
+cpi   :  16 cpse  :   0 dec   :  10 eor   :   0 fmul  :   0 fmuls :   0 
+fmulsu:   0 icall :   0 ijmp  :   0 in    :   4 inc   :  40 jmp   :   4 
+ld    :   0 ldd   :   0 ldi   : 143 lds   :   0 lpm   :  24 lsl   :   0 
+lsr   :   0 mov   :  24 movw  :   0 mul   :   0 muls  :   0 mulsu :   0 
+neg   :   0 nop   :   0 or    :   1 ori   :   0 out   :  25 pop   :   8 
+push  :   6 rcall :   0 ret   :   4 reti  :   4 rjmp  : 108 rol   :   0 
+ror   :   0 sbc   :   0 sbci  :   0 sbi   :  20 sbic  :   1 sbis  :   1 
+sbiw  :   0 sbr   :   0 sbrc  :  11 sbrs  :  29 sec   :   0 seh   :   0 
 sei   :   1 sen   :   0 ser   :   0 ses   :   0 set   :   0 sev   :   0 
-sez   :   0 sleep :   0 spm   :   0 st    :   0 std   :   0 sts   :  11 
+sez   :   0 sleep :   0 spm   :   0 st    :   0 std   :   0 sts   :  15 
 sub   :   0 subi  :   0 swap  :   0 tst   :   0 wdr   :   0 
-Instructions used: 29 out of 113 (25.7%)
+Instructions used: 31 out of 113 (27.4%)
 
 "ATmega328P" memory use summary [bytes]:
 Segment   Begin    End      Code   Data   Used    Size   Use%
 ---------------------------------------------------------------
-[.cseg] 0x000000 0x0003bc    902     10    912   32768   2.8%
+[.cseg] 0x000000 0x00063c   1534     10   1544   32768   4.7%
 [.dseg] 0x000100 0x000100      0      0      0    2048   0.0%
 [.eseg] 0x000000 0x000000      0      0      0    1024   0.0%
 
