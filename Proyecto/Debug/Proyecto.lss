@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.8  C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm Thu Mar 14 03:17:06 2024
+AVRASM ver. 2.2.8  C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm Thu Mar 14 15:18:42 2024
 
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m328Pdef.inc'
 C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm(10): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\M328PDEF.inc'
@@ -1358,18 +1358,18 @@ C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm(10): Includ
 00010b f429                      	BRNE CONFICOMP
 00010c e089                      	LDI R24, 9
 00010d 1608                      	CP R0, R24
-00010e f1c1                      	BREQ CONFINM
+00010e f5c4                      	BRGE CONFINM
 00010f cf57                      	RJMP loop
                                  CONFINICRE7:
 000110 cf56                      	RJMP loop
                                  CONFICOMP:
 000111 e083                      	LDI R24, 3
 000112 1628                      	CP R2, R24
-000113 f021                      	BREQ CONFITOPDIA
+000113 f424                      	BRGE CONFITOPDIA
                                  CONFISUMANORM:
 000114 e08a                      	LDI R24, 10
 000115 1608                      	CP R0, R24
-000116 f159                      	BREQ CONFICD
+000116 f55c                      	BRGE CONFICD
                                  
 000117 cf4f                      	RJMP loop
                                  CONFITOPDIA:
@@ -1421,12 +1421,12 @@ C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm(10): Includ
                                  CONFIPR1:
 00013a e082                      	LDI R24, 2
 00013b 1608                      	CP R0, R24
-00013c f029                      	BREQ CONFICD
+00013c f42c                      	BRGE CONFICD
 00013d cf29                      	RJMP loop
                                  CONFIPR2:
 00013e e081                      	LDI R24, 1
 00013f 1608                      	CP R0, R24
-000140 f009                      	BREQ CONFICD
+000140 f40c                      	BRGE CONFICD
 000141 cf25                      	RJMP loop
                                  
                                  CONFICD:
@@ -1444,14 +1444,14 @@ C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm(10): Includ
 000147 2c36                      	MOV R3, R6
 000148 e081                      	LDI R24, 1
 000149 1648                      	CP R4, R24
-00014a f051                      	BREQ CONFITOPMES
+00014a f454                      	BRGE CONFITOPMES
 00014b 1439                      	CP R3, R9
 00014c f409                      	BRNE CONFINICRE5
 00014d 9413                      	INC R1
                                  CONFINICRE5:
 00014e e08a                      	LDI R24, 10
 00014f 1638                      	CP R3, R24
-000150 f009                      	BREQ CONFITOPNMES
+000150 f40c                      	BRGE CONFITOPNMES
 000151 c010                      	RJMP SALTO2
                                  CONFITOPNMES:
 000152 2433                      	CLR R3
@@ -1464,7 +1464,7 @@ C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm(10): Includ
                                  CONFINICRE6:
 000158 e083                      	LDI R24, 3
 000159 1638                      	CP R3, R24
-00015a f009                      	BREQ CONFICM
+00015a f40c                      	BRGE CONFICM
 00015b c006                      	RJMP SALTO2
                                  CONFICM:
 00015c 2411                      	CLR R1
@@ -1676,6 +1676,7 @@ C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm(10): Includ
 0001f7 27aa                      	CLR R26
 0001f8 ff50                      	SBRS R21, 0
 0001f9 c005                      	RJMP INCRE
+                                 
 0001fa ff51                      	SBRS R21, 1
 0001fb c005                      	RJMP INCRE2
 0001fc ff52                      	SBRS R21, 2
@@ -2028,42 +2029,43 @@ C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm(10): Includ
 0002fc e604                      	LDI R16, 100
 0002fd bd06                      	OUT TCNT0, R16
                                  
-                                 	
-0002fe 94f3                      	INC R15
-0002ff e684                      	LDI R24, 100
-000300 16f8                      	CP R15, R24
-000301 f4c1                      	BRNE FIN0
-000302 24ff                      	CLR R15
+0002fe e081                      	LDI R24, 0b0001
+0002ff 1589                      	CP R24, R9
+000300 94f3                      	INC R15
+000301 e684                      	LDI R24, 100
+000302 16f8                      	CP R15, R24
+000303 f4c1                      	BRNE FIN0
+000304 24ff                      	CLR R15
                                  
-000303 9b2c                      	SBIS PORTB, PB4
-000304 c002                      	RJMP ENCENDERBUZZ
+000305 9b2c                      	SBIS PORTB, PB4
+000306 c002                      	RJMP ENCENDERBUZZ
                                  
-000305 992c                      	SBIC PORTB, PB4
-000306 c009                      	RJMP APAGARBUZZ
+000307 992c                      	SBIC PORTB, PB4
+000308 c009                      	RJMP APAGARBUZZ
                                  
                                  	ENCENDERBUZZ:
-000307 9a2c                      		SBI PORTB, PB4
-000308 9483                      		INC R8
-000309 e38c                      		LDI R24, 60
-00030a 1688                      		CP R8, R24
-00030b f471                      		BRNE FIN0
-00030c e000                      		LDI R16, 0b0000_0000
-00030d 9300 006e                 		STS TIMSK0, R16
-00030f c00a                      		RJMP FIN0
+000309 9a2c                      		SBI PORTB, PB4
+00030a 9483                      		INC R8
+00030b e38c                      		LDI R24, 60
+00030c 1688                      		CP R8, R24
+00030d f471                      		BRNE FIN0
+00030e e000                      		LDI R16, 0b0000_0000
+00030f 9300 006e                 		STS TIMSK0, R16
+000311 c00a                      		RJMP FIN0
                                  	APAGARBUZZ:
-000310 982c                      		CBI PORTB, PB4
-000311 9483                      		INC R8
-000312 e38c                      		LDI R24, 60
-000313 1688                      		CP R8, R24
-000314 f429                      		BRNE FIN0
-000315 2488                      		CLR R8
-000316 e000                      		LDI R16, 0b0000_0000
-000317 9300 006e                 		STS TIMSK0, R16
-000319 c000                      		RJMP FIN0
+000312 982c                      		CBI PORTB, PB4
+000313 9483                      		INC R8
+000314 e38c                      		LDI R24, 60
+000315 1688                      		CP R8, R24
+000316 f429                      		BRNE FIN0
+000317 2488                      		CLR R8
+000318 e000                      		LDI R16, 0b0000_0000
+000319 9300 006e                 		STS TIMSK0, R16
+00031b c000                      		RJMP FIN0
                                  	FIN0:
-00031a 910f                      	POP R16
-00031b bf0f                      	OUT SREG, R16
 00031c 910f                      	POP R16
+00031d bf0f                      	OUT SREG, R16
+00031e 910f                      	POP R16
 
 
 RESOURCE USE INFORMATION
@@ -2082,24 +2084,24 @@ counted separately from r26..r31 here.
 
 "ATmega328P" register use summary:
 x  :   0 y  :   0 z  :  12 r0 :  24 r1 :  33 r2 :   9 r3 :  22 r4 :   8 
-r5 :   3 r6 :  17 r7 :  21 r8 :   6 r9 :   6 r10:   5 r11:  10 r12:   9 
+r5 :   3 r6 :  17 r7 :  21 r8 :   6 r9 :   7 r10:   5 r11:  10 r12:   9 
 r13:  13 r14:   9 r15:   4 r16:  73 r17:   6 r18:  13 r19:  23 r20:  25 
-r21:   9 r22:  16 r23:  20 r24: 131 r25:  12 r26:   5 r27:   5 r28:   1 
+r21:   9 r22:  16 r23:  20 r24: 133 r25:  12 r26:   5 r27:   5 r28:   1 
 r29:   1 r30:  25 r31:  13 
 Registers used: 33 out of 35 (94.3%)
 
 "ATmega328P" instruction use summary:
 .lds  :   0 .sts  :   0 adc   :   0 add   :  12 adiw  :   0 and   :   1 
 andi  :   0 asr   :   0 bclr  :   0 bld   :   0 brbc  :   0 brbs  :   0 
-brcc  :   0 brcs  :   0 break :   0 breq  :  61 brge  :   0 brhc  :   0 
+brcc  :   0 brcs  :   0 break :   0 breq  :  53 brge  :   8 brhc  :   0 
 brhs  :   0 brid  :   0 brie  :   0 brlo  :   0 brlt  :   0 brmi  :   0 
 brne  :  22 brpl  :   0 brsh  :   0 brtc  :   0 brts  :   0 brvc  :   0 
 brvs  :   0 bset  :   0 bst   :   0 call  :  14 cbi   :  19 cbr   :   1 
 clc   :   0 clh   :   0 cli   :   0 cln   :   0 clr   :  53 cls   :   0 
-clt   :   0 clv   :   0 clz   :   0 com   :   0 cp    :  64 cpc   :   0 
+clt   :   0 clv   :   0 clz   :   0 com   :   0 cp    :  65 cpc   :   0 
 cpi   :  16 cpse  :   0 dec   :  10 eor   :   0 fmul  :   0 fmuls :   0 
 fmulsu:   0 icall :   0 ijmp  :   0 in    :   4 inc   :  40 jmp   :   4 
-ld    :   0 ldd   :   0 ldi   : 143 lds   :   0 lpm   :  24 lsl   :   0 
+ld    :   0 ldd   :   0 ldi   : 144 lds   :   0 lpm   :  24 lsl   :   0 
 lsr   :   0 mov   :  24 movw  :   0 mul   :   0 muls  :   0 mulsu :   0 
 neg   :   0 nop   :   0 or    :   1 ori   :   0 out   :  25 pop   :   8 
 push  :   6 rcall :   0 ret   :   4 reti  :   4 rjmp  : 108 rol   :   0 
@@ -2108,12 +2110,12 @@ sbiw  :   0 sbr   :   0 sbrc  :  11 sbrs  :  29 sec   :   0 seh   :   0
 sei   :   1 sen   :   0 ser   :   0 ses   :   0 set   :   0 sev   :   0 
 sez   :   0 sleep :   0 spm   :   0 st    :   0 std   :   0 sts   :  15 
 sub   :   0 subi  :   0 swap  :   0 tst   :   0 wdr   :   0 
-Instructions used: 31 out of 113 (27.4%)
+Instructions used: 32 out of 113 (28.3%)
 
 "ATmega328P" memory use summary [bytes]:
 Segment   Begin    End      Code   Data   Used    Size   Use%
 ---------------------------------------------------------------
-[.cseg] 0x000000 0x00063c   1534     10   1544   32768   4.7%
+[.cseg] 0x000000 0x000640   1538     10   1548   32768   4.7%
 [.dseg] 0x000100 0x000100      0      0      0    2048   0.0%
 [.eseg] 0x000000 0x000000      0      0      0    1024   0.0%
 

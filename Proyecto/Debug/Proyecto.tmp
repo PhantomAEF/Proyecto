@@ -25,8 +25,8 @@
  <LABELS>
   <MAIN><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>22</LINE></MAIN>
   <ISR_PCINT0><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>630</LINE></ISR_PCINT0>
-  <TIM1_OVF><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>781</LINE></TIM1_OVF>
-  <TIM0_OVF><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>988</LINE></TIM0_OVF>
+  <TIM1_OVF><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>782</LINE></TIM1_OVF>
+  <TIM0_OVF><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>989</LINE></TIM0_OVF>
   <TABLA7SEG><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>33</LINE></TABLA7SEG>
   <Setup><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>37</LINE></Setup>
   <IdelayT0><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>606</LINE></IdelayT0>
@@ -85,51 +85,51 @@
   <delay2><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>591</LINE></delay2>
   <delay3><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>598</LINE></delay3>
   <delay4><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>600</LINE></delay4>
-  <FIN><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>772</LINE></FIN>
-  <CONFIINT><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>667</LINE></CONFIINT>
+  <FIN><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>773</LINE></FIN>
+  <CONFIINT><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>668</LINE></CONFIINT>
   <Verificar><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>640</LINE></Verificar>
-  <INCRE><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>649</LINE></INCRE>
-  <INCRE2><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>652</LINE></INCRE2>
-  <INCRE3><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>655</LINE></INCRE3>
-  <INCRE4><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>658</LINE></INCRE4>
-  <APAGARCONFI><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>664</LINE></APAGARCONFI>
-  <CONFI1><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>679</LINE></CONFI1>
-  <CONFI2><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>718</LINE></CONFI2>
-  <CONFI3><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>757</LINE></CONFI3>
-  <CONFI4><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>764</LINE></CONFI4>
-  <CONFIGURARFECHA1><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>693</LINE></CONFIGURARFECHA1>
-  <CONFI11><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>714</LINE></CONFI11>
-  <CONFIGURARALARMA1><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>704</LINE></CONFIGURARALARMA1>
-  <CONFI12><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>712</LINE></CONFI12>
-  <CONFIGURARFECHA2><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>732</LINE></CONFIGURARFECHA2>
-  <CONFI21><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>753</LINE></CONFI21>
-  <CONFIGURARALARMA2><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>743</LINE></CONFIGURARALARMA2>
-  <CONFI22><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>751</LINE></CONFI22>
-  <OVERCONFI3><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>769</LINE></OVERCONFI3>
-  <NADA><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>802</LINE></NADA>
-  <SUMA><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>819</LINE></SUMA>
-  <ENP><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>811</LINE></ENP>
-  <APP><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>815</LINE></APP>
-  <FIN3><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>829</LINE></FIN3>
-  <SUM><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>824</LINE></SUM>
-  <OVERFLO><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>834</LINE></OVERFLO>
-  <FIN2><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>979</LINE></FIN2>
-  <OVERFLO2><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>840</LINE></OVERFLO2>
-  <TOP24><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>852</LINE></TOP24>
-  <OVERFLO3><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>848</LINE></OVERFLO3>
-  <TOP2><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>856</LINE></TOP2>
-  <COMP><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>874</LINE></COMP>
-  <NM><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>949</LINE></NM>
-  <TOPDIA><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>885</LINE></TOPDIA>
-  <SUMANORM><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>878</LINE></SUMANORM>
-  <CD><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>944</LINE></CD>
-  <PR1><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>931</LINE></PR1>
-  <PR2><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>937</LINE></PR2>
-  <TOPMES><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>966</LINE></TOPMES>
-  <TOPNMES><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>962</LINE></TOPNMES>
-  <CM><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>973</LINE></CM>
-  <FIN0><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>1028</LINE></FIN0>
-  <ENCENDERBUZZ><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>1009</LINE></ENCENDERBUZZ>
-  <APAGARBUZZ><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>1018</LINE></APAGARBUZZ>
+  <INCRE><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>650</LINE></INCRE>
+  <INCRE2><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>653</LINE></INCRE2>
+  <INCRE3><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>656</LINE></INCRE3>
+  <INCRE4><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>659</LINE></INCRE4>
+  <APAGARCONFI><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>665</LINE></APAGARCONFI>
+  <CONFI1><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>680</LINE></CONFI1>
+  <CONFI2><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>719</LINE></CONFI2>
+  <CONFI3><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>758</LINE></CONFI3>
+  <CONFI4><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>765</LINE></CONFI4>
+  <CONFIGURARFECHA1><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>694</LINE></CONFIGURARFECHA1>
+  <CONFI11><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>715</LINE></CONFI11>
+  <CONFIGURARALARMA1><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>705</LINE></CONFIGURARALARMA1>
+  <CONFI12><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>713</LINE></CONFI12>
+  <CONFIGURARFECHA2><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>733</LINE></CONFIGURARFECHA2>
+  <CONFI21><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>754</LINE></CONFI21>
+  <CONFIGURARALARMA2><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>744</LINE></CONFIGURARALARMA2>
+  <CONFI22><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>752</LINE></CONFI22>
+  <OVERCONFI3><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>770</LINE></OVERCONFI3>
+  <NADA><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>803</LINE></NADA>
+  <SUMA><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>820</LINE></SUMA>
+  <ENP><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>812</LINE></ENP>
+  <APP><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>816</LINE></APP>
+  <FIN3><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>830</LINE></FIN3>
+  <SUM><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>825</LINE></SUM>
+  <OVERFLO><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>835</LINE></OVERFLO>
+  <FIN2><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>980</LINE></FIN2>
+  <OVERFLO2><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>841</LINE></OVERFLO2>
+  <TOP24><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>853</LINE></TOP24>
+  <OVERFLO3><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>849</LINE></OVERFLO3>
+  <TOP2><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>857</LINE></TOP2>
+  <COMP><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>875</LINE></COMP>
+  <NM><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>950</LINE></NM>
+  <TOPDIA><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>886</LINE></TOPDIA>
+  <SUMANORM><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>879</LINE></SUMANORM>
+  <CD><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>945</LINE></CD>
+  <PR1><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>932</LINE></PR1>
+  <PR2><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>938</LINE></PR2>
+  <TOPMES><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>967</LINE></TOPMES>
+  <TOPNMES><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>963</LINE></TOPNMES>
+  <CM><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>974</LINE></CM>
+  <FIN0><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>1030</LINE></FIN0>
+  <ENCENDERBUZZ><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>1011</LINE></ENCENDERBUZZ>
+  <APAGARBUZZ><FILE>C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm</FILE><LINE>1020</LINE></APAGARBUZZ>
  </LABELS>
 </ASSEMBLER_INFO>

@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.8  C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm Thu Mar 14 03:17:06 2024
+AVRASM ver. 2.2.8  C:\Users\alane\Documents\Atmel Studio\7.0\Proyecto\Proyecto\main.asm Thu Mar 14 15:18:42 2024
 
 
 EQU  SIGNATURE_000 0000001e
@@ -801,6 +801,6 @@ CSEG PR2          000002d3
 CSEG TOPMES       000002ea
 CSEG TOPNMES      000002e7
 CSEG CM           000002f0
-CSEG FIN0         0000031a
-CSEG ENCENDERBUZZ 00000307
-CSEG APAGARBUZZ   00000310
+CSEG FIN0         0000031c
+CSEG ENCENDERBUZZ 00000309
+CSEG APAGARBUZZ   00000312
